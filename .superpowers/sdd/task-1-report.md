@@ -70,3 +70,21 @@ protocol explicitly protects private query details, treats external material as
 untrusted, and disallows source-directed execution and unreviewed code copying.
 No repository credential, executable-install, or destructive-command guidance
 was added.
+
+## Review Finding Follow-up
+
+The release licensing finding is resolved by adding the standard MIT license
+for copyright `2026 2731350936` and declaring `"license": "MIT"` in
+`.codex-plugin/plugin.json`.
+
+## Validation Evidence
+
+Exact commands and results:
+
+```text
+$ /usr/bin/python3 -c 'import json; from pathlib import Path; data=json.loads(Path(".codex-plugin/plugin.json").read_text()); assert data["license"] == "MIT"; print("plugin.json: valid JSON; license=MIT")'
+plugin.json: valid JSON; license=MIT
+
+$ /usr/bin/python3 /Users/a0000/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .
+Plugin validation passed: /Users/a0000/Documents/Skill/old-hand
+```

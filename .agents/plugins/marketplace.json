@@ -1,0 +1,20 @@
+{
+  "name": "old-hand",
+  "interface": {
+    "displayName": "Old Hand"
+  },
+  "plugins": [
+    {
+      "name": "old-hand",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

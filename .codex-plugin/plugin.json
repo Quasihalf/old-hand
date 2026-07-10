@@ -1,0 +1,28 @@
+{
+  "name": "old-hand",
+  "version": "0.2.0",
+  "description": "Evidence-first engineering judgment for Codex coding tasks.",
+  "author": {
+    "name": "2731350936",
+    "url": "https://github.com/2731350936"
+  },
+  "homepage": "https://github.com/2731350936/old-hand",
+  "repository": "https://github.com/2731350936/old-hand",
+  "keywords": [
+    "engineering",
+    "debugging",
+    "code-review",
+    "research",
+    "yagni"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Old Hand",
+    "shortDescription": "Evidence-first engineering judgment for coding",
+    "longDescription": "A lightweight Codex skill for researching architecture, tracing bug root causes, reviewing scope, and choosing the smallest correct implementation.",
+    "developerName": "2731350936",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "Use $old-hand to handle this coding task with mature engineering judgment and the smallest correct approach."
+  }
+}

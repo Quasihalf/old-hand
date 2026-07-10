@@ -1,0 +1,102 @@
+{
+  "skill_name": "old-hand",
+  "version": "0.2.0",
+  "cases": [
+    {
+      "id": "trigger-new-product",
+      "query": "I want to build a local-first personal finance app; research similar OSS products and propose the architecture.",
+      "should_trigger": true,
+      "reason": "New product direction requires prior-art research and engineering judgment."
+    },
+    {
+      "id": "trigger-small-debug",
+      "query": "This valid zero becomes null somewhere in the importer. Trace the callers and fix the root cause.",
+      "should_trigger": true,
+      "reason": "A semantic bug needs local-first root-cause judgment."
+    },
+    {
+      "id": "trigger-review",
+      "query": "Review this service design for over-engineering and dependencies we do not need yet.",
+      "should_trigger": true,
+      "reason": "Explicit over-design review."
+    },
+    {
+      "id": "trigger-architecture",
+      "query": "Choose the foundational queue architecture for this new offline sync engine and show comparable projects.",
+      "should_trigger": true,
+      "reason": "Foundational architecture and prior art."
+    },
+    {
+      "id": "trigger-routine-implementation",
+      "query": "Add this endpoint using the repository's existing authorization and validation patterns.",
+      "should_trigger": true,
+      "reason": "Normal implementation requires reuse and scope judgment."
+    },
+    {
+      "id": "trigger-refactor",
+      "query": "Refactor this duplicated parsing path, but keep the change small and avoid speculative abstractions.",
+      "should_trigger": true,
+      "reason": "Refactoring with explicit engineering constraints."
+    },
+    {
+      "id": "trigger-dependency",
+      "query": "Do we really need to add another date library here, or can the platform already handle it?",
+      "should_trigger": true,
+      "reason": "Dependency cost and native capability decision."
+    },
+    {
+      "id": "trigger-chinese",
+      "query": "像老手一样写这个功能，先看看项目里有没有可以复用的实现，不要过度设计。",
+      "should_trigger": true,
+      "reason": "Direct Chinese trigger phrases."
+    },
+    {
+      "id": "negative-mechanical-rename",
+      "query": "Rename foo to bar on line 18 only.",
+      "should_trigger": false,
+      "reason": "Purely mechanical edit."
+    },
+    {
+      "id": "negative-formatting",
+      "query": "Run the existing formatter on this file and report whether it changed.",
+      "should_trigger": false,
+      "reason": "Mechanical command with no engineering choice."
+    },
+    {
+      "id": "negative-translation",
+      "query": "Translate this architecture blog post from English to Chinese.",
+      "should_trigger": false,
+      "reason": "Architecture is only the prose topic; this is a translation task."
+    },
+    {
+      "id": "negative-general-knowledge",
+      "query": "What does YAGNI stand for?",
+      "should_trigger": false,
+      "reason": "General knowledge does not require a coding workflow."
+    },
+    {
+      "id": "negative-summarize-diff",
+      "query": "Summarize the pasted diff in three bullets without reviewing it.",
+      "should_trigger": false,
+      "reason": "The user requested mechanical summarization, not engineering review."
+    },
+    {
+      "id": "negative-release-note-copyedit",
+      "query": "Copyedit these release notes so the English sounds natural; do not change technical meaning.",
+      "should_trigger": false,
+      "reason": "Non-coding prose edit despite technical vocabulary."
+    },
+    {
+      "id": "negative-file-read",
+      "query": "Read package.json and tell me the current version number only.",
+      "should_trigger": false,
+      "reason": "One-step factual retrieval."
+    },
+    {
+      "id": "negative-git-status",
+      "query": "Show me git status and do nothing else.",
+      "should_trigger": false,
+      "reason": "Mechanical repository inspection."
+    }
+  ]
+}

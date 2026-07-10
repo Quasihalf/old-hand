@@ -1,0 +1,118 @@
+{
+  "skill_name": "old-hand",
+  "version": "0.2.0",
+  "cases": [
+    {
+      "id": "project-start-research",
+      "prompt": "I want to build a local-first macOS clipboard manager. Find similar open-source projects and recommend a minimal architecture.",
+      "route": "project-research",
+      "expect": {
+        "behaviors": [
+          "researches 5-8 or more plausible open-source candidates",
+          "shortlists 2-3 projects and selects one closest benchmark",
+          "separates patterns to borrow from code or complexity not to copy",
+          "cites sources and records a privacy-safe research receipt"
+        ],
+        "avoid": ["copying source code", "turning research into an endless survey"]
+      }
+    },
+    {
+      "id": "small-debug-local-first",
+      "prompt": "A valid numeric zero is being treated as missing in this Python parser. Fix the bug and verify it.",
+      "route": "debug",
+      "expect": {
+        "behaviors": [
+          "does not browse by default",
+          "reads callers and reproduces the falsey-value path",
+          "fixes the shared root cause with a targeted check"
+        ],
+        "avoid": ["adding a new abstraction", "patching only the reported caller"]
+      }
+    },
+    {
+      "id": "over-design-review",
+      "prompt": "Review this MVP plan: Kafka, Redis, an abstract factory, a plugin registry, and three microservices for the first ten users.",
+      "route": "review",
+      "expect": {
+        "behaviors": [
+          "presents findings before summary",
+          "flags speculative infrastructure and one-implementation abstractions",
+          "offers a smaller alternative that preserves the actual requirement"
+        ],
+        "avoid": ["keeping complexity merely for future scale"]
+      }
+    },
+    {
+      "id": "routine-dependency-choice",
+      "prompt": "This existing Python service already uses requests. Add one small HTTP call. Should we add another client library?",
+      "route": "implementation",
+      "expect": {
+        "behaviors": [
+          "inspects and reuses the installed dependency",
+          "does not launch broad open-source research",
+          "avoids a new dependency without a demonstrated need"
+        ],
+        "avoid": ["dependency comparison theater"]
+      }
+    },
+    {
+      "id": "foundational-dependency",
+      "prompt": "We are choosing the foundational embedded database for a new offline-first desktop product. Compare proven open-source options.",
+      "route": "project-research",
+      "expect": {
+        "behaviors": [
+          "researches maintained comparable projects and primary documentation",
+          "checks maintenance and license signals",
+          "makes the tradeoff and selected benchmark visible"
+        ],
+        "avoid": ["choosing by star count alone"]
+      }
+    },
+    {
+      "id": "confirmed-full-scope",
+      "prompt": "The plugin system is a confirmed customer requirement. We have clarified the interfaces; implement that full scope now.",
+      "route": "implementation",
+      "expect": {
+        "behaviors": [
+          "implements the confirmed requirement without re-litigating it",
+          "keeps optional extras outside the agreed scope"
+        ],
+        "avoid": ["using YAGNI to delete an explicit requirement"]
+      }
+    },
+    {
+      "id": "ordinary-implementation",
+      "prompt": "Add the new invoice status transition using the transaction and error types already used by sibling handlers.",
+      "route": "implementation",
+      "expect": {
+        "behaviors": [
+          "reads the real code path before editing",
+          "reuses local transaction and error patterns",
+          "adds the smallest relevant runnable check"
+        ],
+        "avoid": ["introducing a new architecture"]
+      }
+    },
+    {
+      "id": "domain-skill-coexistence",
+      "prompt": "Use the project's SwiftUI conventions to add this macOS settings control and review the result for unnecessary state wrappers.",
+      "route": "implementation-review",
+      "expect": {
+        "behaviors": [
+          "lets the platform-specific skill lead framework details",
+          "keeps old-hand active for reuse, scope, and dependency judgment"
+        ],
+        "avoid": ["replacing domain guidance with generic minimalism"]
+      }
+    },
+    {
+      "id": "mechanical-negative-control",
+      "prompt": "Rename the local variable tmp to buffer in this one line and make no other changes.",
+      "route": "skip",
+      "expect": {
+        "behaviors": ["performs only the mechanical edit without loading a judgment workflow"],
+        "avoid": ["research", "architectural commentary"]
+      }
+    }
+  ]
+}

@@ -68,7 +68,9 @@ dependency cost, and solution size. Do not treat another skill as a substitute.
 
 ## Output style
 
-- Small fixes: put code or result first, then the key tradeoff and check run.
+- Small fixes: put code or result first, then state what broke, the root cause,
+  the fix, and the check run in one short line each. Do not collapse a
+  non-trivial fix into a completion notice.
 - Project-start research: include research summary, borrowed patterns, selected
   benchmark, minimal implementation direction, and next steps.
 - Reviews: findings first, with concrete evidence.

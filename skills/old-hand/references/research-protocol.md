@@ -127,6 +127,12 @@ Do not blindly borrow:
 
 ## Output Format
 
+Default to a decision brief, not a complete architecture specification. Use one
+candidate table, 3-5 common patterns, the benchmark decision, the borrow/avoid
+boundary, and 3-6 minimal next-step bullets. Include schemas, module trees, or
+detailed dependency tables only when the user asks for them or the decision
+cannot be justified without them.
+
 For project-start research, use this shape:
 
 1. Similar projects checked
@@ -140,5 +146,6 @@ For project-start research, use this shape:
 8. Named-source notes, when the user provided a reference project
 9. Open questions or next steps
 
-Keep the answer concise, but include enough explanation for the user to see the
-engineering tradeoffs.
+Keep the research receipt to a few bullets. Stop after the recommendation is
+actionable; research depth should improve the decision, not turn the answer
+into an implementation plan the user did not request.

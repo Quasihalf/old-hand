@@ -49,7 +49,7 @@ Prefer primary sources in those cases and cite them.
 
 ## Output Format
 
-Use a short shape:
+Use this short shape even when the code and tests already passed:
 
 1. What broke
 2. Root cause
@@ -57,4 +57,6 @@ Use a short shape:
 4. Check run
 5. Root-cause receipt, only for a non-trivial fix
 
-Keep small fixes small.
+Use one short sentence per item. Do not replace the final explanation with only
+"done", "fixed", or a test result; the causal evidence is part of a correct
+non-trivial fix. Keep small fixes small.

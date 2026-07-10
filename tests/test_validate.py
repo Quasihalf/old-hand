@@ -91,6 +91,87 @@ class ValidateRepositoryTests(unittest.TestCase):
 
         self.assert_has_error("plugin manifest skills must be a relative path")
 
+    def test_rejects_plugin_manifest_that_is_not_an_object(self):
+        (self.repo / ".codex-plugin/plugin.json").write_text("[]", encoding="utf-8")
+
+        self.assert_has_error("plugin manifest must be an object")
+
+    def test_rejects_malformed_marketplace_entry_without_raising(self):
+        marketplace_path = self.repo / ".agents/plugins/marketplace.json"
+        marketplace = json.loads(marketplace_path.read_text(encoding="utf-8"))
+        marketplace["plugins"] = [None]
+        marketplace_path.write_text(json.dumps(marketplace), encoding="utf-8")
+
+        self.assert_has_error("marketplace plugins[0] must be an object")
+
+    def test_rejects_non_object_eval_expect_without_raising(self):
+        eval_path = self.repo / "evals/evals.json"
+        payload = json.loads(eval_path.read_text(encoding="utf-8"))
+        payload["cases"][0]["expect"] = []
+        eval_path.write_text(json.dumps(payload), encoding="utf-8")
+
+        self.assert_has_error("evals/evals.json cases[0].expect must be an object")
+
+    def test_rejects_eval_fixture_without_required_version_fields(self):
+        eval_path = self.repo / "evals/evals.json"
+        payload = json.loads(eval_path.read_text(encoding="utf-8"))
+        del payload["version"]
+        case = payload["cases"][0]
+        del case["route"]
+        del case["expect"]["behaviors"]
+        del case["expect"]["avoid"]
+        eval_path.write_text(json.dumps(payload), encoding="utf-8")
+
+        errors = validate_repository(self.repo)
+        for fragment in (
+            "evals/evals.json must set version to '0.2.0'",
+            "evals/evals.json cases[0].route must be non-empty",
+            "evals/evals.json cases[0].expect.behaviors must be a non-empty array",
+            "evals/evals.json cases[0].expect.avoid must be a non-empty array",
+        ):
+            self.assertTrue(any(fragment in error for error in errors), fragment)
+
+    def test_rejects_trigger_fixture_with_duplicate_id_missing_reason_and_version(self):
+        trigger_path = self.repo / "evals/trigger-cases.json"
+        payload = json.loads(trigger_path.read_text(encoding="utf-8"))
+        del payload["version"]
+        payload["cases"][1]["id"] = payload["cases"][0]["id"]
+        del payload["cases"][0]["reason"]
+        trigger_path.write_text(json.dumps(payload), encoding="utf-8")
+
+        errors = validate_repository(self.repo)
+        for fragment in (
+            "evals/trigger-cases.json must set version to '0.2.0'",
+            "evals/trigger-cases.json cases[1].id must be unique and non-empty",
+            "evals/trigger-cases.json cases[0].reason must be non-empty",
+        ):
+            self.assertTrue(any(fragment in error for error in errors), fragment)
+
+    def test_rejects_empty_trigger_id(self):
+        trigger_path = self.repo / "evals/trigger-cases.json"
+        payload = json.loads(trigger_path.read_text(encoding="utf-8"))
+        payload["cases"][0]["id"] = ""
+        trigger_path.write_text(json.dumps(payload), encoding="utf-8")
+
+        self.assert_has_error(
+            "evals/trigger-cases.json cases[0].id must be unique and non-empty"
+        )
+
+    def test_rejects_plugin_skills_directory_that_is_not_canonical(self):
+        manifest_path = self.repo / ".codex-plugin/plugin.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["skills"] = "./"
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+        self.assert_has_error("plugin manifest skills must equal './skills/'")
+
+    def test_rejects_plugin_bundle_without_old_hand_skill(self):
+        (self.repo / "skills/old-hand/SKILL.md").unlink()
+
+        self.assert_has_error(
+            "plugin skills bundle must contain skills/old-hand/SKILL.md"
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,7 +1,7 @@
 # v0.2.0 Qualitative Baseline
 
-Date: 2026-07-10  
-Model: GPT-5.6 family  
+Date: 2026-07-10
+Model: GPT-5.6 family
 Scope: isolated, qualitative forward tests
 
 Nine completed scenarios were checked while developing the installed

@@ -92,6 +92,8 @@ def _validate_eval_cases(payload: Any, errors: list[str]) -> None:
     if not isinstance(payload, dict) or payload.get("skill_name") != "old-hand":
         errors.append("evals/evals.json must set skill_name to 'old-hand'")
         return
+    if payload.get("version") != "0.2.0":
+        errors.append("evals/evals.json must set version to '0.2.0'")
     cases = payload.get("cases")
     if not isinstance(cases, list) or not cases:
         errors.append("evals/evals.json cases must be a non-empty array")
@@ -108,31 +110,51 @@ def _validate_eval_cases(payload: Any, errors: list[str]) -> None:
             seen.add(case_id)
         if not isinstance(case.get("prompt"), str) or not case["prompt"].strip():
             errors.append(f"evals/evals.json cases[{index}].prompt must be non-empty")
-        behaviors = (case.get("expect") or {}).get("behaviors")
-        if not isinstance(behaviors, list) or not behaviors or not all(
-            isinstance(item, str) and item.strip() for item in behaviors
-        ):
-            errors.append(
-                f"evals/evals.json cases[{index}].expect.behaviors must be a non-empty array"
-            )
+        route = case.get("route")
+        if not isinstance(route, str) or not route.strip():
+            errors.append(f"evals/evals.json cases[{index}].route must be non-empty")
+        expect = case.get("expect")
+        if not isinstance(expect, dict):
+            errors.append(f"evals/evals.json cases[{index}].expect must be an object")
+            continue
+        for field in ("behaviors", "avoid"):
+            values = expect.get(field)
+            if not isinstance(values, list) or not values or not all(
+                isinstance(item, str) and item.strip() for item in values
+            ):
+                errors.append(
+                    f"evals/evals.json cases[{index}].expect.{field} must be a non-empty array"
+                )
 
 
 def _validate_trigger_cases(payload: Any, errors: list[str]) -> None:
     if not isinstance(payload, dict) or payload.get("skill_name") != "old-hand":
         errors.append("evals/trigger-cases.json must set skill_name to 'old-hand'")
         return
+    if payload.get("version") != "0.2.0":
+        errors.append("evals/trigger-cases.json must set version to '0.2.0'")
     cases = payload.get("cases")
     if not isinstance(cases, list) or not cases:
         errors.append("evals/trigger-cases.json cases must be a non-empty array")
         return
     positives = 0
     negatives = 0
+    seen: set[str] = set()
     for index, case in enumerate(cases):
         if not isinstance(case, dict):
             errors.append(f"evals/trigger-cases.json cases[{index}] must be an object")
             continue
+        case_id = case.get("id")
+        if not isinstance(case_id, str) or not case_id.strip() or case_id in seen:
+            errors.append(
+                f"evals/trigger-cases.json cases[{index}].id must be unique and non-empty"
+            )
+        else:
+            seen.add(case_id)
         if not isinstance(case.get("query"), str) or not case["query"].strip():
             errors.append(f"evals/trigger-cases.json cases[{index}].query must be non-empty")
+        if not isinstance(case.get("reason"), str) or not case["reason"].strip():
+            errors.append(f"evals/trigger-cases.json cases[{index}].reason must be non-empty")
         trigger = case.get("should_trigger")
         if not isinstance(trigger, bool):
             errors.append(
@@ -174,7 +196,9 @@ def validate_repository(root: Path) -> list[str]:
     plugin_path = root / ".codex-plugin/plugin.json"
     if plugin_path.is_file():
         plugin = _load_json(plugin_path, errors)
-        if isinstance(plugin, dict):
+        if not isinstance(plugin, dict):
+            errors.append("plugin manifest must be an object")
+        else:
             if plugin.get("name") != "old-hand":
                 errors.append("plugin manifest must set name to 'old-hand'")
             if plugin.get("version") != "0.2.0":
@@ -184,10 +208,14 @@ def validate_repository(root: Path) -> list[str]:
             skills = plugin.get("skills")
             if not isinstance(skills, str) or Path(skills).is_absolute():
                 errors.append("plugin manifest skills must be a relative path")
+            elif skills != "./skills/":
+                errors.append("plugin manifest skills must equal './skills/'")
             else:
                 resolved = root / skills
                 if not _inside(root, resolved) or not resolved.is_dir():
                     errors.append("plugin manifest skills must resolve to a directory inside the repo")
+        if not (root / "skills/old-hand/SKILL.md").is_file():
+            errors.append("plugin skills bundle must contain skills/old-hand/SKILL.md")
 
     marketplace_path = root / ".agents/plugins/marketplace.json"
     if marketplace_path.is_file():
@@ -197,11 +225,14 @@ def validate_repository(root: Path) -> list[str]:
             errors.append("marketplace must contain exactly one plugin")
         else:
             entry = plugins[0]
-            if entry.get("name") != "old-hand":
-                errors.append("marketplace plugin must be named 'old-hand'")
-            source = entry.get("source")
-            if source != {"source": "local", "path": "./"}:
-                errors.append("marketplace source must point to the repository root")
+            if not isinstance(entry, dict):
+                errors.append("marketplace plugins[0] must be an object")
+            else:
+                if entry.get("name") != "old-hand":
+                    errors.append("marketplace plugin must be named 'old-hand'")
+                source = entry.get("source")
+                if source != {"source": "local", "path": "./"}:
+                    errors.append("marketplace source must point to the repository root")
 
     eval_path = root / "evals/evals.json"
     if eval_path.is_file():

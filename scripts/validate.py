@@ -88,6 +88,39 @@ def _inside(root: Path, candidate: Path) -> bool:
     return True
 
 
+def _parse_agent_metadata(text: str) -> dict[str, dict[str, Any]]:
+    """Parse the small, generated openai.yaml shape used by this skill."""
+    result: dict[str, dict[str, Any]] = {}
+    section: str | None = None
+    for line in text.splitlines():
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        section_match = re.fullmatch(r"([a-zA-Z][a-zA-Z0-9_-]*):", line)
+        if section_match:
+            section = section_match.group(1)
+            result.setdefault(section, {})
+            continue
+        value_match = re.fullmatch(
+            r"  ([a-zA-Z][a-zA-Z0-9_-]*):\s*(.+)", line
+        )
+        if section is None or value_match is None:
+            continue
+        key, raw_value = value_match.groups()
+        if raw_value == "true":
+            value: Any = True
+        elif raw_value == "false":
+            value = False
+        elif raw_value.startswith('"') and raw_value.endswith('"'):
+            try:
+                value = json.loads(raw_value)
+            except json.JSONDecodeError:
+                value = raw_value
+        else:
+            value = raw_value
+        result[section][key] = value
+    return result
+
+
 def _validate_eval_cases(payload: Any, errors: list[str]) -> None:
     if not isinstance(payload, dict) or payload.get("skill_name") != "old-hand":
         errors.append("evals/evals.json must set skill_name to 'old-hand'")
@@ -233,6 +266,22 @@ def validate_repository(root: Path) -> list[str]:
                 source = entry.get("source")
                 if source != {"source": "local", "path": "./"}:
                     errors.append("marketplace source must point to the repository root")
+
+    agent_path = root / "skills/old-hand/agents/openai.yaml"
+    if agent_path.is_file():
+        agent = _parse_agent_metadata(agent_path.read_text(encoding="utf-8"))
+        interface = agent.get("interface", {})
+        policy = agent.get("policy", {})
+        if interface.get("display_name") != "Old Hand":
+            errors.append("openai.yaml interface.display_name must be 'Old Hand'")
+        short_description = interface.get("short_description")
+        if not isinstance(short_description, str) or not 25 <= len(short_description) <= 64:
+            errors.append("openai.yaml interface.short_description must be 25-64 characters")
+        default_prompt = interface.get("default_prompt")
+        if not isinstance(default_prompt, str) or "$old-hand" not in default_prompt:
+            errors.append("openai.yaml interface.default_prompt must mention '$old-hand'")
+        if policy.get("allow_implicit_invocation") is not True:
+            errors.append("openai.yaml policy.allow_implicit_invocation must be true")
 
     eval_path = root / "evals/evals.json"
     if eval_path.is_file():

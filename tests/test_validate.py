@@ -172,6 +172,23 @@ class ValidateRepositoryTests(unittest.TestCase):
             "plugin skills bundle must contain skills/old-hand/SKILL.md"
         )
 
+    def test_rejects_invalid_agent_metadata(self):
+        metadata_path = self.repo / "skills/old-hand/agents/openai.yaml"
+        metadata = metadata_path.read_text(encoding="utf-8")
+        metadata = metadata.replace(
+            "allow_implicit_invocation: true",
+            "allow_implicit_invocation: false",
+        )
+        metadata = metadata.replace("$old-hand", "old-hand", 1)
+        metadata_path.write_text(metadata, encoding="utf-8")
+
+        errors = validate_repository(self.repo)
+        for fragment in (
+            "openai.yaml policy.allow_implicit_invocation must be true",
+            "openai.yaml interface.default_prompt must mention '$old-hand'",
+        ):
+            self.assertTrue(any(fragment in error for error in errors), fragment)
+
 
 if __name__ == "__main__":
     unittest.main()

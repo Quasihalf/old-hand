@@ -17,7 +17,7 @@ jobs:
           python-version: "3.12"
       - name: Run unit tests
         run: python3 -m unittest discover -s tests -v
-      - name: Validate repository
+      - name: Validate plugin, skill, agent metadata, and fixtures
         run: python3 scripts/validate.py .
       - name: Parse JSON manifests and fixtures
         run: |

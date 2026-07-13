@@ -1,6 +1,6 @@
 {
   "skill_name": "old-hand",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "cases": [
     {
       "id": "trigger-new-product",
@@ -51,6 +51,18 @@
       "reason": "Direct Chinese trigger phrases."
     },
     {
+      "id": "trigger-create-video-skill-implicit-research",
+      "query": "帮我做一个剪辑视频的 skill",
+      "should_trigger": true,
+      "reason": "Creating a new skill requires engineering judgment and prior-art research even without explicit search wording."
+    },
+    {
+      "id": "trigger-build-agent-plugin-implicit-research",
+      "query": "Build a Codex plugin that coordinates release-note generation across repositories.",
+      "should_trigger": true,
+      "reason": "A new plugin and agent workflow should enter project-start research before design."
+    },
+    {
       "id": "negative-mechanical-rename",
       "query": "Rename foo to bar on line 18 only.",
       "should_trigger": false,
@@ -97,6 +109,12 @@
       "query": "Show me git status and do nothing else.",
       "should_trigger": false,
       "reason": "Mechanical repository inspection."
+    },
+    {
+      "id": "negative-existing-skill-metadata-edit",
+      "query": "Change display_name from Video Helper to Video Editor in this existing openai.yaml and make no other changes.",
+      "should_trigger": false,
+      "reason": "A constrained metadata-only edit is mechanical, not creation or substantial redesign."
     }
   ]
 }

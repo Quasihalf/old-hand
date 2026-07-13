@@ -5,8 +5,11 @@ whether an answer merely sounds experienced.
 
 ## Current Status
 
-Version `0.2.0` includes a qualitative behavior baseline, not a statistical
-A/B benchmark. See [baseline.md](baseline.md) for the evidence and its limits.
+Version `0.2.1` includes a qualitative behavior baseline and one fresh-task
+implicit-trigger regression run, not a statistical A/B benchmark. See
+[baseline.md](baseline.md) and
+[the v0.2.1 review](../evals/reports/v0.2.1-review.md) for the evidence and its
+limits.
 
 ## Planned Comparison
 

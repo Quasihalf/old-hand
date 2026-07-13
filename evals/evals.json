@@ -1,7 +1,26 @@
 {
   "skill_name": "old-hand",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "cases": [
+    {
+      "id": "implicit-skill-creation-research",
+      "prompt": "帮我做一个剪辑视频的 skill",
+      "route": "project-research",
+      "expect": {
+        "behaviors": [
+          "implicitly selects old-hand without requiring explicit search wording",
+          "researches comparable skills and open-source video-editing projects before design or scaffolding",
+          "runs the initial search before finalizing a stack, architecture, feature scope, benchmark, or scaffold location",
+          "cites inspected sources and separates patterns to borrow from code not to copy",
+          "lets specialized skill-creation guidance lead artifact mechanics after research"
+        ],
+        "avoid": [
+          "letting a specialized creator skill bypass prior-art research",
+          "starting design or scaffolding before the research gate",
+          "treating FFmpeg or another provisional search hypothesis as settled, or scaffolding before the initial search"
+        ]
+      }
+    },
     {
       "id": "project-start-research",
       "prompt": "I want to build a local-first macOS clipboard manager. Find similar open-source projects and recommend a minimal architecture.",

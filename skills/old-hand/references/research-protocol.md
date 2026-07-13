@@ -14,6 +14,25 @@ Use this when the user proposes a new app, tool, product direction,
 architecture, technical category, foundational library or framework choice, or
 asks "how should we build X?"
 
+Creating or substantially redesigning a skill, plugin, agent, MCP server,
+automation, reusable workflow, or developer tool is also a project-start
+research task. Research before design, scaffolding, or implementation even when the user did not ask for research.
+Do not let a specialized creator skill bypass this gate; use that skill for
+artifact mechanics after prior art has informed the direction.
+
+When the target is clear enough to form useful privacy-safe queries, start the
+search before asking non-blocking design questions. If the target is too vague
+to search responsibly, ask one or two blocking questions, then search before
+design. Do not run this gate for a mechanical correction, metadata-only edit,
+rename, or formatting change to an existing artifact.
+
+Before the initial search completes, do not finalize an implementation stack, architecture, feature scope, benchmark, or scaffold location, and do not begin design or scaffolding.
+You may briefly restate the target and name a provisional direction to form
+privacy-safe query hypotheses, but revisit it after inspecting evidence.
+Planning notes created before the search must record research as pending and
+must not contain design commitments. Select the direction only after inspecting
+the initial evidence.
+
 Also use it when the user asks for similar open-source projects, references,
 benchmarks, prior art, mature patterns, or says "找类似开源项目" or "借鉴开源项目".
 

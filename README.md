@@ -27,6 +27,10 @@ Start a new Codex task after installation so the new skill is available. Use
 `old-hand` uses the route that fits the work instead of applying one large
 process everywhere:
 
+- **New skill, plugin, agent, MCP server, automation, workflow, or developer
+  tool:** research comparable skills and open-source projects before design or
+  scaffolding, even when the user did not explicitly ask to search. For a clear
+  target, search before finalizing the stack, architecture, scope, or scaffold.
 - **New project, product direction, architecture, or foundational dependency:**
   research comparable open-source projects before designing; record sources,
   selection rationale, and a minimal build direction.
@@ -52,6 +56,8 @@ have not earned their cost.
 - Do not execute downloaded code, install a dependency, or copy source merely
   because a search result suggests it.
 - Do not browse by default for an ordinary local bug fix.
+- Do not launch creation research for a mechanical rename, formatting change,
+  or metadata-only correction to an existing artifact.
 - Do not simplify away security, data integrity, accessibility basics, or
   confirmed user requirements.
 - Once the user has confirmed the complete scope, implement that scope without

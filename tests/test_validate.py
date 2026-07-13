@@ -83,6 +83,79 @@ class ValidateRepositoryTests(unittest.TestCase):
 
         self.assert_has_error("SKILL.md frontmatter must set name to 'old-hand'")
 
+    def test_rejects_missing_creation_trigger(self):
+        skill_path = self.repo / "skills/old-hand/SKILL.md"
+        skill_path.write_text(
+            skill_path.read_text(encoding="utf-8").replace(
+                "when creating or substantially redesigning a skill, plugin, "
+                "agent, MCP server,\n  automation, reusable workflow",
+                "when creating a reusable artifact",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "SKILL.md description must explicitly trigger for skill, plugin, "
+            "agent, MCP, and workflow creation"
+        )
+
+    def test_rejects_late_creation_discovery_trigger(self):
+        skill_path = self.repo / "skills/old-hand/SKILL.md"
+        skill_path.write_text(
+            skill_path.read_text(encoding="utf-8").replace(
+                "before finalizing the initial stack, architecture, scope, "
+                "benchmark, or scaffold",
+                "after finalizing the initial implementation direction",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "SKILL.md description must make old-hand discoverable before "
+            "creation design decisions"
+        )
+
+    def test_rejects_missing_creation_research_gate(self):
+        protocol_path = (
+            self.repo / "skills/old-hand/references/research-protocol.md"
+        )
+        protocol_path.write_text(
+            protocol_path.read_text(encoding="utf-8").replace(
+                "Research before design, scaffolding, or implementation even "
+                "when the user did not ask for research.",
+                "Research when the user asks for it.",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "research protocol must require creation research before design "
+            "without an explicit research request"
+        )
+
+    def test_rejects_creation_design_before_initial_search(self):
+        protocol_path = (
+            self.repo / "skills/old-hand/references/research-protocol.md"
+        )
+        protocol_path.write_text(
+            protocol_path.read_text(encoding="utf-8").replace(
+                "Before the initial search completes, do not finalize an "
+                "implementation stack, architecture, feature scope, benchmark, "
+                "or scaffold location, and do not begin design or scaffolding.\n",
+                "Finalize the implementation direction before searching.\n",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "research protocol must prevent finalized design or scaffolding "
+            "before the initial search"
+        )
+
     def test_rejects_absolute_plugin_skills_path(self):
         manifest_path = self.repo / ".codex-plugin/plugin.json"
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -124,7 +197,7 @@ class ValidateRepositoryTests(unittest.TestCase):
 
         errors = validate_repository(self.repo)
         for fragment in (
-            "evals/evals.json must set version to '0.2.0'",
+            "evals/evals.json must set version to '0.2.1'",
             "evals/evals.json cases[0].route must be non-empty",
             "evals/evals.json cases[0].expect.behaviors must be a non-empty array",
             "evals/evals.json cases[0].expect.avoid must be a non-empty array",
@@ -141,7 +214,7 @@ class ValidateRepositoryTests(unittest.TestCase):
 
         errors = validate_repository(self.repo)
         for fragment in (
-            "evals/trigger-cases.json must set version to '0.2.0'",
+            "evals/trigger-cases.json must set version to '0.2.1'",
             "evals/trigger-cases.json cases[1].id must be unique and non-empty",
             "evals/trigger-cases.json cases[0].reason must be non-empty",
         ):

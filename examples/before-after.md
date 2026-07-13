@@ -58,3 +58,14 @@ security protections, or data-integrity work.
 
 **After:** Make the mechanical edit directly. This is not a reason to trigger
 research, debugging, dependency analysis, or a design review.
+
+## 7. Implicit research for skill creation
+
+**Before:** "帮我做一个剪辑视频的 skill" immediately enters creator-specific
+questions or scaffolding because the user did not explicitly request research.
+
+**After:** Implicitly classify this as a new reusable agent artifact. Research
+comparable video-editing skills and maintained open-source projects before
+finalizing a stack, architecture, scope, or scaffold location, then let the
+specialized skill creator handle artifact mechanics. The user does not need to
+add "search" or invoke `old-hand` explicitly.

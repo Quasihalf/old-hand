@@ -1,17 +1,14 @@
 ---
 name: old-hand
 description: >-
-  Use this cross-cutting skill alongside specialized coding skills whenever a
-  task requires engineering judgment: implementation, small or large bug fixes,
-  debugging, refactoring, code review, architecture, dependency decisions, and
-  new project directions; skip only purely mechanical edits. Also use it when
-  the user says "old-hand", "老程序员", "像老手一样写", "像有经验的程序员", "找类似开源项目",
-  "借鉴开源项目", "不要过度设计", "YAGNI", or asks for mature patterns, a simpler
-  solution, root-cause fixes, or less bloat. For new project, product,
-  architecture, type, or foundational dependency directions, proactively
-  research similar open-source projects. For ordinary debugging, stay local by
-  default and make the smallest root-cause fix. Do not use for unrelated
-  non-coding prose or general knowledge unless explicitly asked.
+  Use this cross-cutting skill alongside specialized coding skills when creating or substantially redesigning a skill, plugin, agent, MCP server,
+  automation, reusable workflow, developer tool, app, or product, especially before finalizing the initial stack, architecture, scope, benchmark, or scaffold; and when
+  implementing, debugging, refactoring, reviewing, choosing dependencies, or
+  starting an architecture or foundational dependency direction.
+  Also use for "old-hand", "老程序员", "像老手一样写", "创建 skill", "做一个 skill",
+  "create a skill", "build a plugin", "找类似开源项目", "借鉴开源项目", "不要过度设计",
+  "YAGNI", prior-art, root-cause, or smaller-solution requests. Skip only purely
+  mechanical edits and unrelated non-coding prose or general knowledge.
 ---
 
 # Old Hand
@@ -25,9 +22,18 @@ reading that makes a small change correct.
 Keep Old Hand active when another coding skill provides the deeper procedure.
 Follow that skill for its specialty; use Old Hand to control scope, reuse,
 dependency cost, and solution size. Do not treat another skill as a substitute.
+For a new reusable agent artifact, complete Old Hand's research gate before a
+specialized creator skill begins design or scaffolding; then let that creator
+skill lead artifact-specific mechanics.
 
 ## Route the task
 
+- **New or substantially redesigned skill, plugin, agent, MCP server,
+  automation, reusable workflow, or developer tool**: read
+  `references/research-protocol.md`; complete its creation-research gate before
+  design, scaffolding, or implementation, even when the user did not ask for
+  research. For a clear target, make the initial comparable-project search the
+  first substantive action after loading required skill instructions.
 - **Project start, product direction, architecture, or foundational dependency
   choice**: read `references/research-protocol.md`; search for similar
   open-source projects when web/search tools are available.
@@ -59,6 +65,13 @@ dependency cost, and solution size. Do not treat another skill as a substitute.
 
 - Search proactively for new project, product, type, architecture, or
   foundational dependency directions.
+- Treat creation or substantial redesign of a skill, plugin, agent, MCP server,
+  automation, reusable workflow, or developer tool as project-start research.
+  Do not wait for the user to say "search," "research," or "open source."
+- Before that initial search, do not commit to a stack, architecture, feature
+  scope, benchmark, or scaffold location.
+- A small correction, metadata edit, rename, or formatting change to an
+  existing artifact is not creation research.
 - For routine dependency choices, inspect local code, standard library,
   platform features, and installed dependencies before searching broadly.
 - Do not search for ordinary small debug tasks.

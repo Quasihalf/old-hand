@@ -10,6 +10,22 @@ from pathlib import Path
 from typing import Any
 
 
+RELEASE_VERSION = "0.2.1"
+CREATION_TRIGGER_TERMS = ("skill", "plugin", "agent", "mcp", "workflow")
+CREATION_DISCOVERY_ORDER = (
+    "before finalizing the initial stack, architecture, scope, benchmark, or "
+    "scaffold"
+)
+CREATION_RESEARCH_GATE = (
+    "Research before design, scaffolding, or implementation even when the user "
+    "did not ask for research."
+)
+CREATION_RESEARCH_ORDER_GATE = (
+    "Before the initial search completes, do not finalize an implementation "
+    "stack, architecture, feature scope, benchmark, or scaffold location, and "
+    "do not begin design or scaffolding."
+)
+
 REQUIRED_FILES = (
     ".agents/plugins/marketplace.json",
     ".codex-plugin/plugin.json",
@@ -125,8 +141,10 @@ def _validate_eval_cases(payload: Any, errors: list[str]) -> None:
     if not isinstance(payload, dict) or payload.get("skill_name") != "old-hand":
         errors.append("evals/evals.json must set skill_name to 'old-hand'")
         return
-    if payload.get("version") != "0.2.0":
-        errors.append("evals/evals.json must set version to '0.2.0'")
+    if payload.get("version") != RELEASE_VERSION:
+        errors.append(
+            f"evals/evals.json must set version to '{RELEASE_VERSION}'"
+        )
     cases = payload.get("cases")
     if not isinstance(cases, list) or not cases:
         errors.append("evals/evals.json cases must be a non-empty array")
@@ -164,8 +182,10 @@ def _validate_trigger_cases(payload: Any, errors: list[str]) -> None:
     if not isinstance(payload, dict) or payload.get("skill_name") != "old-hand":
         errors.append("evals/trigger-cases.json must set skill_name to 'old-hand'")
         return
-    if payload.get("version") != "0.2.0":
-        errors.append("evals/trigger-cases.json must set version to '0.2.0'")
+    if payload.get("version") != RELEASE_VERSION:
+        errors.append(
+            f"evals/trigger-cases.json must set version to '{RELEASE_VERSION}'"
+        )
     cases = payload.get("cases")
     if not isinstance(cases, list) or not cases:
         errors.append("evals/trigger-cases.json cases must be a non-empty array")
@@ -218,8 +238,21 @@ def validate_repository(root: Path) -> list[str]:
         else:
             if metadata.get("name") != "old-hand":
                 errors.append("SKILL.md frontmatter must set name to 'old-hand'")
-            if not metadata.get("description", "").strip():
+            description = metadata.get("description", "").strip()
+            if not description:
                 errors.append("SKILL.md frontmatter description must be non-empty")
+            elif not all(
+                term in description.lower() for term in CREATION_TRIGGER_TERMS
+            ):
+                errors.append(
+                    "SKILL.md description must explicitly trigger for skill, "
+                    "plugin, agent, MCP, and workflow creation"
+                )
+            if description and CREATION_DISCOVERY_ORDER not in description.lower():
+                errors.append(
+                    "SKILL.md description must make old-hand discoverable before "
+                    "creation design decisions"
+                )
         for reference in ROUTED_REFERENCES:
             if reference not in skill_text:
                 errors.append(f"SKILL.md does not route to {reference}")
@@ -234,8 +267,10 @@ def validate_repository(root: Path) -> list[str]:
         else:
             if plugin.get("name") != "old-hand":
                 errors.append("plugin manifest must set name to 'old-hand'")
-            if plugin.get("version") != "0.2.0":
-                errors.append("plugin manifest must set version to '0.2.0'")
+            if plugin.get("version") != RELEASE_VERSION:
+                errors.append(
+                    f"plugin manifest must set version to '{RELEASE_VERSION}'"
+                )
             if plugin.get("license") != "MIT":
                 errors.append("plugin manifest must set license to 'MIT'")
             skills = plugin.get("skills")
@@ -289,6 +324,20 @@ def validate_repository(root: Path) -> list[str]:
     triggers_path = root / "evals/trigger-cases.json"
     if triggers_path.is_file():
         _validate_trigger_cases(_load_json(triggers_path, errors), errors)
+
+    research_path = root / "skills/old-hand/references/research-protocol.md"
+    if research_path.is_file():
+        research_text = research_path.read_text(encoding="utf-8")
+        if CREATION_RESEARCH_GATE not in research_text:
+            errors.append(
+                "research protocol must require creation research before design "
+                "without an explicit research request"
+            )
+        if CREATION_RESEARCH_ORDER_GATE not in research_text:
+            errors.append(
+                "research protocol must prevent finalized design or scaffolding "
+                "before the initial search"
+            )
 
     forbidden = ("TODO", "TBD", "[PLACEHOLDER")
     for relative in PUBLIC_TEXT_FILES:

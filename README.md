@@ -15,7 +15,7 @@ framework for research, debugging, review, and everyday implementation.
 Add this repository as a Codex marketplace, then install the plugin:
 
 ```sh
-codex plugin marketplace add 2731350936/old-hand --ref main
+codex plugin marketplace add Quasihalf/old-hand --ref main
 codex plugin add old-hand@old-hand
 ```
 

@@ -5,7 +5,7 @@
 Do not open a public issue for a suspected vulnerability. Submit a private
 report through the repository's GitHub Security Advisory form:
 
-<https://github.com/2731350936/old-hand/security/advisories/new>
+<https://github.com/Quasihalf/old-hand/security/advisories/new>
 
 Include the affected file and version, a minimal reproduction or proof of
 concept, expected and actual behavior, impact, and any suggested mitigation.

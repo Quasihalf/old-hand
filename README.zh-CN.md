@@ -14,7 +14,7 @@
 先将此仓库添加为 Codex marketplace，再安装 plugin：
 
 ```sh
-codex plugin marketplace add 2731350936/old-hand --ref main
+codex plugin marketplace add Quasihalf/old-hand --ref main
 codex plugin add old-hand@old-hand
 ```
 

@@ -4,9 +4,9 @@ description: >-
   Always use Old Hand together with skill-creator or plugin-creator before
   creating or substantially redesigning a skill, plugin, agent, MCP server,
   automation, reusable workflow, developer tool, app, or product, even when the
-  user did not ask for research. Load it before finalizing the initial stack,
-  architecture, scope, benchmark, or scaffold so comparable-project research
-  happens before design or scaffolding. Also use it as a cross-cutting judgment
+  user did not ask for research. Run an external comparable-project search
+  before asking non-blocking creator questions and before finalizing the initial stack,
+  architecture, scope, benchmark, or scaffold. Also use it as a cross-cutting judgment
   layer when implementing, debugging, refactoring, reviewing, choosing
   dependencies, or starting an architecture or foundational dependency direction.
   Also use for "old-hand", "老程序员", "像老手一样写", "创建 skill", "做一个 skill",
@@ -36,8 +36,9 @@ skill lead artifact-specific mechanics.
   automation, reusable workflow, or developer tool**: read
   `references/research-protocol.md`; complete its creation-research gate before
   design, scaffolding, or implementation, even when the user did not ask for
-  research. For a clear target, make the initial comparable-project search the
-  first substantive action after loading required skill instructions.
+  research. For a clear target, make an external web or GitHub search the first
+  substantive action after loading required skill instructions. Local skill or
+  repository inspection can supplement that search but cannot replace it.
 - **Project start, product direction, architecture, or foundational dependency
   choice**: read `references/research-protocol.md`; search for similar
   open-source projects when web/search tools are available.
@@ -72,6 +73,12 @@ skill lead artifact-specific mechanics.
 - Treat creation or substantial redesign of a skill, plugin, agent, MCP server,
   automation, reusable workflow, or developer tool as project-start research.
   Do not wait for the user to say "search," "research," or "open source."
+- A category-level request is enough to start. Tool or backend choice, target
+  app, installation location, and exact feature scope are shortlist dimensions,
+  not blocking questions; search broad variants before asking about them.
+- When a web/search tool is available, only an external search completes the
+  creation gate. Local skills, repositories, and model memory are supporting
+  evidence, not a substitute.
 - Before that initial search, do not commit to a stack, architecture, feature
   scope, benchmark, or scaffold location.
 - A small correction, metadata edit, rename, or formatting change to an

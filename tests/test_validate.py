@@ -181,6 +181,43 @@ class ValidateRepositoryTests(unittest.TestCase):
             "before the initial search"
         )
 
+    def test_rejects_local_only_creation_research(self):
+        protocol_path = (
+            self.repo / "skills/old-hand/references/research-protocol.md"
+        )
+        protocol_path.write_text(
+            protocol_path.read_text(encoding="utf-8").replace(
+                "When web/search is available, the creation gate requires an "
+                "external web,\nGitHub, or open-source search.",
+                "Local project inspection is sufficient for the creation gate.",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "research protocol must require external search for creation work"
+        )
+
+    def test_rejects_creator_choices_as_search_blockers(self):
+        protocol_path = (
+            self.repo / "skills/old-hand/references/research-protocol.md"
+        )
+        protocol_path.write_text(
+            protocol_path.read_text(encoding="utf-8").replace(
+                "Tool or backend choice, target app,\ninstallation location, "
+                "and exact feature scope are not blocking questions",
+                "Tool choice and installation location must be answered first",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "research protocol must not treat creator implementation choices "
+            "as blockers to the initial search"
+        )
+
     def test_rejects_absolute_plugin_skills_path(self):
         manifest_path = self.repo / ".codex-plugin/plugin.json"
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))

@@ -26,6 +26,17 @@ to search responsibly, ask one or two blocking questions, then search before
 design. Do not run this gate for a mechanical correction, metadata-only edit,
 rename, or formatting change to an existing artifact.
 
+For creation work, a category-level request such as "video-editing skill" is
+clear enough for the initial search. Tool or backend choice, target app,
+installation location, and exact feature scope are not blocking questions;
+search broad adjacent variants first and use the evidence to sharpen those
+questions. Only missing information that prevents any useful privacy-safe query
+may delay the initial search.
+
+When web/search is available, the creation gate requires an external web,
+GitHub, or open-source search. Inspecting local skills or repositories and
+recalling known projects may inform the query, but does not complete the gate.
+
 Before the initial search completes, do not finalize an implementation stack, architecture, feature scope, benchmark, or scaffold location, and do not begin design or scaffolding.
 You may briefly restate the target and name a provisional direction to form
 privacy-safe query hypotheses, but revisit it after inspecting evidence.
@@ -58,13 +69,18 @@ Default to a medium-deep pass:
 
 1. Restate the product shape, core workflow, likely stack, and adjacent names.
 2. Generate several privacy-safe search queries from those terms.
-3. Prefer GitHub and open-source sources for implementations.
-4. Use general web search when GitHub-specific search is unavailable or weak.
-5. Use whatever web/search tools exist in the environment; do not depend on a
+3. For creation work, run the first external query before asking about tool,
+   backend, target app, installation location, or exact feature scope.
+4. Prefer GitHub and open-source sources for implementations.
+5. Use general web search when GitHub-specific search is unavailable or weak.
+6. Use whatever web/search tools exist in the environment; do not depend on a
    specific provider.
-6. If search is unavailable, state that limitation and continue from local
+7. Before declaring search unavailable, check once for an already-configured
+   search tool or CLI. Do not install or authenticate a new provider just to
+   satisfy the gate.
+8. If search is unavailable, state that limitation and continue from local
    knowledge without pretending the research happened.
-7. Cite the sources used in the final research summary.
+9. Cite the sources used in the final research summary.
 
 ## Research Safety
 

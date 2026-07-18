@@ -30,6 +30,14 @@ CREATION_RESEARCH_ORDER_GATE = (
     "stack, architecture, feature scope, benchmark, or scaffold location, and "
     "do not begin design or scaffolding."
 )
+CREATION_EXTERNAL_SEARCH_GATE = (
+    "When web/search is available, the creation gate requires an external web, "
+    "GitHub, or open-source search."
+)
+CREATION_NONBLOCKING_DIMENSIONS = (
+    "Tool or backend choice, target app, installation location, and exact "
+    "feature scope are not blocking questions"
+)
 
 REQUIRED_FILES = (
     ".agents/plugins/marketplace.json",
@@ -359,15 +367,25 @@ def validate_repository(root: Path) -> list[str]:
     research_path = root / "skills/old-hand/references/research-protocol.md"
     if research_path.is_file():
         research_text = research_path.read_text(encoding="utf-8")
-        if CREATION_RESEARCH_GATE not in research_text:
+        normalized_research_text = " ".join(research_text.split())
+        if CREATION_RESEARCH_GATE not in normalized_research_text:
             errors.append(
                 "research protocol must require creation research before design "
                 "without an explicit research request"
             )
-        if CREATION_RESEARCH_ORDER_GATE not in research_text:
+        if CREATION_RESEARCH_ORDER_GATE not in normalized_research_text:
             errors.append(
                 "research protocol must prevent finalized design or scaffolding "
                 "before the initial search"
+            )
+        if CREATION_EXTERNAL_SEARCH_GATE not in normalized_research_text:
+            errors.append(
+                "research protocol must require external search for creation work"
+            )
+        if CREATION_NONBLOCKING_DIMENSIONS not in normalized_research_text:
+            errors.append(
+                "research protocol must not treat creator implementation choices "
+                "as blockers to the initial search"
             )
 
     forbidden = ("TODO", "TBD", "[PLACEHOLDER")

@@ -68,9 +68,11 @@ have not earned their cost.
 
 ## Evidence
 
-Development to date includes nine completed qualitative scenarios covering the
-skill's intended routing and boundaries. They are useful behavioral evidence,
-not a statistical benchmark or a claim of measured cross-platform support.
+Development evidence includes nine qualitative baseline scenarios, one v0.2.1
+implicit-trigger run, and five repeated v0.2.2 creator-research runs. They are
+useful behavioral and ordering evidence, not a statistical benchmark, an
+invocation-rate claim, or measured cross-platform support. See the
+[benchmark plan](benchmarks/README.md) for details and limits.
 
 ## Contents
 

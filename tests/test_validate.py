@@ -87,9 +87,8 @@ class ValidateRepositoryTests(unittest.TestCase):
         skill_path = self.repo / "skills/old-hand/SKILL.md"
         skill_path.write_text(
             skill_path.read_text(encoding="utf-8").replace(
-                "when creating or substantially redesigning a skill, plugin, "
-                "agent, MCP server,\n  automation, reusable workflow",
-                "when creating a reusable artifact",
+                "a skill, plugin, agent, MCP server,\n  automation, reusable workflow",
+                "a reusable artifact",
                 1,
             ),
             encoding="utf-8",
@@ -100,13 +99,29 @@ class ValidateRepositoryTests(unittest.TestCase):
             "agent, MCP, and workflow creation"
         )
 
+    def test_rejects_creation_coload_rule_that_is_not_front_loaded(self):
+        skill_path = self.repo / "skills/old-hand/SKILL.md"
+        skill_path.write_text(
+            skill_path.read_text(encoding="utf-8").replace(
+                "Always use Old Hand together with skill-creator or "
+                "plugin-creator before\n  creating or substantially redesigning",
+                "Use Old Hand for mature judgment when creating or "
+                "substantially redesigning",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "SKILL.md description must front-load creator-skill co-loading"
+        )
+
     def test_rejects_late_creation_discovery_trigger(self):
         skill_path = self.repo / "skills/old-hand/SKILL.md"
         skill_path.write_text(
             skill_path.read_text(encoding="utf-8").replace(
-                "before finalizing the initial stack, architecture, scope, "
-                "benchmark, or scaffold",
-                "after finalizing the initial implementation direction",
+                "before finalizing the initial stack,",
+                "after finalizing the initial stack,",
                 1,
             ),
             encoding="utf-8",
@@ -197,7 +212,7 @@ class ValidateRepositoryTests(unittest.TestCase):
 
         errors = validate_repository(self.repo)
         for fragment in (
-            "evals/evals.json must set version to '0.2.1'",
+            "evals/evals.json must set version to '0.2.2'",
             "evals/evals.json cases[0].route must be non-empty",
             "evals/evals.json cases[0].expect.behaviors must be a non-empty array",
             "evals/evals.json cases[0].expect.avoid must be a non-empty array",
@@ -214,7 +229,7 @@ class ValidateRepositoryTests(unittest.TestCase):
 
         errors = validate_repository(self.repo)
         for fragment in (
-            "evals/trigger-cases.json must set version to '0.2.1'",
+            "evals/trigger-cases.json must set version to '0.2.2'",
             "evals/trigger-cases.json cases[1].id must be unique and non-empty",
             "evals/trigger-cases.json cases[0].reason must be non-empty",
         ):

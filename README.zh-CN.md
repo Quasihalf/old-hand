@@ -18,8 +18,10 @@ codex plugin marketplace add Quasihalf/old-hand --ref main
 codex plugin add old-hand@old-hand
 ```
 
-安装后请新建一个 Codex task，使新 skill 可用。需要为编码任务显式调用它时，使用
-`$old-hand`。
+安装后请新建一个 Codex task，使新 skill 可用。需要强制调用时可以使用
+`$old-hand`；当用户新建或实质重构 Skill、Plugin、Agent、MCP server、自动化、
+工作流、开发工具、应用或产品时，它会尝试在设计或搭建前与专用 creator skill
+自动共载。
 
 ## 路由
 

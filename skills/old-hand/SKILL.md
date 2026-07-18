@@ -1,10 +1,14 @@
 ---
 name: old-hand
 description: >-
-  Use this cross-cutting skill alongside specialized coding skills when creating or substantially redesigning a skill, plugin, agent, MCP server,
-  automation, reusable workflow, developer tool, app, or product, especially before finalizing the initial stack, architecture, scope, benchmark, or scaffold; and when
-  implementing, debugging, refactoring, reviewing, choosing dependencies, or
-  starting an architecture or foundational dependency direction.
+  Always use Old Hand together with skill-creator or plugin-creator before
+  creating or substantially redesigning a skill, plugin, agent, MCP server,
+  automation, reusable workflow, developer tool, app, or product, even when the
+  user did not ask for research. Load it before finalizing the initial stack,
+  architecture, scope, benchmark, or scaffold so comparable-project research
+  happens before design or scaffolding. Also use it as a cross-cutting judgment
+  layer when implementing, debugging, refactoring, reviewing, choosing
+  dependencies, or starting an architecture or foundational dependency direction.
   Also use for "old-hand", "老程序员", "像老手一样写", "创建 skill", "做一个 skill",
   "create a skill", "build a plugin", "找类似开源项目", "借鉴开源项目", "不要过度设计",
   "YAGNI", prior-art, root-cause, or smaller-solution requests. Skip only purely

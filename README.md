@@ -20,7 +20,10 @@ codex plugin add old-hand@old-hand
 ```
 
 Start a new Codex task after installation so the new skill is available. Use
-`$old-hand` explicitly when you want to invoke it for a coding task.
+`$old-hand` explicitly when you want to force it for a coding task. For new or
+substantially redesigned skills, plugins, agents, MCP servers, automations,
+workflows, developer tools, apps, and products, it is designed to co-load
+automatically with the specialized creator skill before design or scaffolding.
 
 ## Routes
 

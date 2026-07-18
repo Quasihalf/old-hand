@@ -1,6 +1,6 @@
 {
   "name": "old-hand",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Evidence-first engineering judgment for Codex coding tasks.",
   "author": {
     "name": "Quasihalf",
@@ -20,10 +20,10 @@
   "interface": {
     "displayName": "Old Hand",
     "shortDescription": "Evidence-first engineering judgment for coding",
-    "longDescription": "A lightweight Codex skill for researching architecture, tracing bug root causes, reviewing scope, and choosing the smallest correct implementation.",
+    "longDescription": "A lightweight Codex skill that co-loads with creator skills, researches comparable projects before design, traces bug root causes, reviews scope, and chooses the smallest correct implementation.",
     "developerName": "Quasihalf",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "Use $old-hand to handle this coding task with mature engineering judgment and the smallest correct approach."
+    "defaultPrompt": "Use $old-hand alongside specialized coding skills, researching comparable projects before creating or substantially redesigning an engineering artifact."
   }
 }

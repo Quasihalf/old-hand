@@ -1,6 +1,6 @@
 {
   "skill_name": "old-hand",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "cases": [
     {
       "id": "implicit-skill-creation-research",
@@ -8,7 +8,7 @@
       "route": "project-research",
       "expect": {
         "behaviors": [
-          "implicitly selects old-hand without requiring explicit search wording",
+          "implicitly co-loads old-hand with skill-creator without requiring explicit search wording",
           "researches comparable skills and open-source video-editing projects before design or scaffolding",
           "runs the initial search before finalizing a stack, architecture, feature scope, benchmark, or scaffold location",
           "cites inspected sources and separates patterns to borrow from code not to copy",

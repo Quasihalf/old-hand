@@ -10,7 +10,11 @@ from pathlib import Path
 from typing import Any
 
 
-RELEASE_VERSION = "0.2.1"
+RELEASE_VERSION = "0.2.2"
+CREATION_COLOAD_PREFIX = (
+    "always use old hand together with skill-creator or plugin-creator before "
+    "creating or substantially redesigning"
+)
 CREATION_TRIGGER_TERMS = ("skill", "plugin", "agent", "mcp", "workflow")
 CREATION_DISCOVERY_ORDER = (
     "before finalizing the initial stack, architecture, scope, benchmark, or "
@@ -241,13 +245,19 @@ def validate_repository(root: Path) -> list[str]:
             description = metadata.get("description", "").strip()
             if not description:
                 errors.append("SKILL.md frontmatter description must be non-empty")
-            elif not all(
-                term in description.lower() for term in CREATION_TRIGGER_TERMS
-            ):
-                errors.append(
-                    "SKILL.md description must explicitly trigger for skill, "
-                    "plugin, agent, MCP, and workflow creation"
-                )
+            else:
+                lowered_description = description.lower()
+                if not lowered_description.startswith(CREATION_COLOAD_PREFIX):
+                    errors.append(
+                        "SKILL.md description must front-load creator-skill co-loading"
+                    )
+                if not all(
+                    term in lowered_description for term in CREATION_TRIGGER_TERMS
+                ):
+                    errors.append(
+                        "SKILL.md description must explicitly trigger for skill, "
+                        "plugin, agent, MCP, and workflow creation"
+                    )
             if description and CREATION_DISCOVERY_ORDER not in description.lower():
                 errors.append(
                     "SKILL.md description must make old-hand discoverable before "

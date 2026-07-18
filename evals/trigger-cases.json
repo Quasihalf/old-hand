@@ -1,6 +1,6 @@
 {
   "skill_name": "old-hand",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "cases": [
     {
       "id": "trigger-new-product",

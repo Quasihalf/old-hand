@@ -162,24 +162,42 @@ Do not blindly borrow:
 
 ## Output Format
 
+After research and before design, scaffolding, or implementation, show a compact
+decision brief in the user-visible response. Do not leave the synthesis only in
+tool traces, hidden reasoning, or a candidate-link list. For an execution
+request, show the brief and then continue without waiting unless a
+decision-critical question blocks a correct implementation.
+
+Use explicit headings or direct language equivalents for `Common mature
+patterns`, `Borrow / Avoid`, `Minimal build direction`, and
+`Decision-critical questions`. Keep these four synthesis sections separate
+from the candidate table and from each other. Before sending the brief, verify
+that all four are present; use `None` under the questions heading when nothing
+blocks the direction.
+
 Default to a decision brief, not a complete architecture specification. Use one
-candidate table, 3-5 common patterns, the benchmark decision, the borrow/avoid
-boundary, and 3-6 minimal next-step bullets. Include schemas, module trees, or
-detailed dependency tables only when the user asks for them or the decision
+candidate table and 3-6 minimal next-step bullets. Include schemas, module trees,
+or detailed dependency tables only when the user asks for them or the decision
 cannot be justified without them.
 
 For project-start research, use this shape:
 
 1. Similar projects checked
-2. Common patterns
+2. Common mature patterns: show 3-5 synthesized patterns separately from the
+   candidate table; identify the multiple projects that support each pattern
+   when possible, and label a useful single-project idea as such
 3. Closest benchmark
-4. What to borrow
-5. What not to borrow
-6. Minimal build direction
+4. Borrow and avoid decisions (`Borrow / Avoid`): list what to borrow, what to
+   reject or defer,
+   and a concrete fit, complexity, maintenance, or license reason for each
+5. Minimal build direction: state the smallest architecture or implementation
+   slice that follows from the evidence
+6. Decision-critical questions: ask only questions that can materially change
+   the direction; write `None` when no such question remains
 7. Research receipt: privacy-safe query themes, sources inspected, stop reason,
    and any material unavailable
 8. Named-source notes, when the user provided a reference project
-9. Open questions or next steps
+9. Next steps
 
 Keep the research receipt to a few bullets. Stop after the recommendation is
 actionable; research depth should improve the decision, not turn the answer

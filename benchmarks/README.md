@@ -5,13 +5,13 @@ whether an answer merely sounds experienced.
 
 ## Current Status
 
-Version `0.2.3` adds repeated trace-based routing checks for substantive coding,
-mechanical boundaries, local debugging, and six creator categories to the
-earlier qualitative baseline and creator-research regressions. This is stronger
-regression evidence, not a randomized A/B benchmark or a universal invocation
-rate. See [baseline.md](baseline.md),
+Version `0.2.4` adds a trace-reviewed visible research-brief check to the
+repeated routing checks for substantive coding, mechanical boundaries, local
+debugging, and creator categories. This is stronger regression evidence, not a
+randomized A/B benchmark or a universal invocation rate. See [baseline.md](baseline.md),
 [the v0.2.2 review](../evals/reports/v0.2.2-review.md), and
-[the v0.2.3 review](../evals/reports/v0.2.3-review.md) for the evidence and its
+[the v0.2.3 review](../evals/reports/v0.2.3-review.md) and
+[the v0.2.4 review](../evals/reports/v0.2.4-review.md) for the evidence and its
 limits.
 
 ## Planned Comparison

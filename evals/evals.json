@@ -1,6 +1,6 @@
 {
   "skill_name": "old-hand",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "cases": [
     {
       "id": "implicit-skill-creation-research",
@@ -14,6 +14,9 @@
           "treats backend, target app, installation location, and exact feature scope as shortlist dimensions rather than blockers to the initial search",
           "runs the initial search before finalizing a stack, architecture, feature scope, benchmark, or scaffold location",
           "cites inspected sources and separates patterns to borrow from code not to copy",
+          "shows common mature patterns in the user-facing response separately from the candidate table",
+          "shows borrow and avoid decisions with concrete reasons",
+          "shows the minimal build direction and decision-critical questions before implementation",
           "lets specialized skill-creation guidance lead artifact mechanics after research"
         ],
         "avoid": [
@@ -21,6 +24,7 @@
           "counting local skill or repository inspection as completion of the creation research gate",
           "declaring search unavailable without checking configured search skills or CLIs",
           "starting design or scaffolding before the research gate",
+          "returning only candidate links or keeping the research synthesis in tool traces",
           "treating FFmpeg or another provisional search hypothesis as settled, or scaffolding before the initial search"
         ]
       }
@@ -33,10 +37,16 @@
         "behaviors": [
           "researches 5-8 or more plausible open-source candidates",
           "shortlists 2-3 projects and selects one closest benchmark",
-          "separates patterns to borrow from code or complexity not to copy",
+          "shows common mature patterns in the user-facing response separately from the candidate table",
+          "shows borrow and avoid decisions with concrete reasons",
+          "shows the minimal build direction and decision-critical questions before implementation",
           "cites sources and records a privacy-safe research receipt"
         ],
-        "avoid": ["copying source code", "turning research into an endless survey"]
+        "avoid": [
+          "copying source code",
+          "turning research into an endless survey",
+          "returning only candidate links or keeping the research synthesis in tool traces"
+        ]
       }
     },
     {
@@ -86,9 +96,15 @@
         "behaviors": [
           "researches maintained comparable projects and primary documentation",
           "checks maintenance and license signals",
-          "makes the tradeoff and selected benchmark visible"
+          "makes the tradeoff and selected benchmark visible",
+          "shows common mature patterns in the user-facing response separately from the candidate table",
+          "shows borrow and avoid decisions with concrete reasons",
+          "shows the minimal build direction and decision-critical questions before implementation"
         ],
-        "avoid": ["choosing by star count alone"]
+        "avoid": [
+          "choosing by star count alone",
+          "returning only candidate links or keeping the research synthesis in tool traces"
+        ]
       }
     },
     {

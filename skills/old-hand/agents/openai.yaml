@@ -1,7 +1,7 @@
 interface:
   display_name: "Old Hand"
   short_description: "Mature engineering judgment for coding"
-  default_prompt: "Use $old-hand for every substantive coding task; research comparable projects before designing a new direction."
+  default_prompt: "Use $old-hand for every substantive coding task; research new directions and show the resulting decision brief."
 
 policy:
   allow_implicit_invocation: true

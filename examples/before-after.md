@@ -68,4 +68,7 @@ questions or scaffolding because the user did not explicitly request research.
 comparable video-editing skills and maintained open-source projects before
 finalizing a stack, architecture, scope, or scaffold location, then let the
 specialized skill creator handle artifact mechanics. The user does not need to
-add "search" or invoke `old-hand` explicitly.
+add "search" or invoke `old-hand` explicitly. Before any scaffolding, show
+separate **Common mature patterns**, **Borrow / Avoid**, **Minimal build
+direction**, and **Decision-critical questions** sections; do not hide the
+tradeoffs in the candidate table.

@@ -40,7 +40,8 @@ process everywhere:
   target, search before finalizing the stack, architecture, scope, or scaffold.
 - **New project, product direction, architecture, or foundational dependency:**
   research comparable open-source projects before designing; record sources,
-  selection rationale, and a minimal build direction.
+  selection rationale, common mature patterns, explicit borrow/avoid decisions,
+  and a minimal build direction.
 - **Existing-project implementation or feature extension:** read the real path
   and sibling implementations, reuse local contracts, and run the smallest
   relevant check. Do not browse unless the work establishes a new direction.
@@ -56,6 +57,21 @@ process everywhere:
 For ordinary implementation, these habits are the active route rather than
 optional background advice: understand the real path, reuse what already
 exists, and avoid abstractions or configuration that have not earned their cost.
+
+## Visible Research Brief
+
+After project-start research and before design, scaffolding, or implementation,
+the user-facing response contains four separate sections:
+
+- **Common mature patterns:** 3-5 patterns synthesized across candidates.
+- **Borrow / Avoid:** what to adopt, reject, or defer, with a concrete reason.
+- **Minimal build direction:** the smallest implementation direction supported
+  by the evidence.
+- **Decision-critical questions:** only questions that can change that direction,
+  or an explicit `None` when no blocker remains.
+
+The candidate table is evidence, not the synthesis. Old Hand does not expose
+hidden reasoning; it exposes the decisions and the evidence behind them.
 
 ## Boundaries
 
@@ -75,13 +91,16 @@ exists, and avoid abstractions or configuration that have not earned their cost.
 
 ## Evidence
 
-Version `0.2.3` was forward-tested in isolated Codex homes: substantive
-existing-project implementation loaded Old Hand in 9/9 runs, mechanical
-controls skipped it in 6/6 runs, local debugging used its debug path in 3/3
-runs, and six creation categories retained research-before-design behavior.
-These are repeated regression results from one configured environment, not a
-universal invocation-rate or cross-platform claim. See the
-[v0.2.3 review](evals/reports/v0.2.3-review.md) and
+Version `0.2.4` adds a visible research-brief contract. Three independent
+project-start runs (video Skill, macOS clipboard product, and embedded database
+selection) searched first and then displayed all four decision sections before
+any implementation. The earlier `v0.2.3` routing matrix remains intact:
+substantive existing-project implementation loaded Old Hand in 9/9 runs,
+mechanical controls skipped it in 6/6 runs, and local debugging used its debug
+path in 3/3 runs. These are repeated regression results from one configured
+environment, not a universal invocation-rate or cross-platform claim. See the
+[v0.2.4 review](evals/reports/v0.2.4-review.md), the
+[v0.2.3 review](evals/reports/v0.2.3-review.md), and
 [benchmark plan](benchmarks/README.md) for evidence and limits.
 
 ## Contents

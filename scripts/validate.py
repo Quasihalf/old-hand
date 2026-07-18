@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 
-RELEASE_VERSION = "0.2.3"
+RELEASE_VERSION = "0.2.4"
 MAX_SKILL_DESCRIPTION_LENGTH = 1024
 MAX_DEFAULT_PROMPT_LENGTH = 128
 SUBSTANTIVE_DEFAULT_PROMPT = "every substantive coding task"
@@ -59,6 +59,27 @@ CREATION_NONBLOCKING_DIMENSIONS = (
 CREATION_SEARCH_DISCOVERY_GATE = (
     "Before declaring search unavailable, inspect the callable tools and "
     "available Skill names for web search."
+)
+SKILL_VISIBLE_RESEARCH_GATE = (
+    "Project-start research: after searching and before design, scaffolding, or "
+    "implementation, show the user a compact decision brief."
+)
+RESEARCH_VISIBLE_DECISION_GATE = (
+    "After research and before design, scaffolding, or implementation, show a "
+    "compact decision brief in the user-visible response."
+)
+RESEARCH_VISIBLE_SEPARATION_GATE = (
+    "Keep these four synthesis sections separate from the candidate table and "
+    "from each other."
+)
+RESEARCH_VISIBLE_SECTIONS = (
+    "Common mature patterns",
+    "Borrow and avoid decisions",
+    "Minimal build direction",
+    "Decision-critical questions",
+)
+RESEARCH_OUTPUT_EVAL_TERMS = tuple(
+    term.lower() for term in RESEARCH_VISIBLE_SECTIONS
 )
 
 REQUIRED_FILES = (
@@ -211,6 +232,18 @@ def _validate_eval_cases(payload: Any, errors: list[str]) -> None:
                 errors.append(
                     f"evals/evals.json cases[{index}].expect.{field} must be a non-empty array"
                 )
+        behaviors = expect.get("behaviors")
+        if route == "project-research" and isinstance(behaviors, list):
+            visible_contract = " ".join(
+                item for item in behaviors if isinstance(item, str)
+            ).lower()
+            if not all(
+                term in visible_contract for term in RESEARCH_OUTPUT_EVAL_TERMS
+            ):
+                errors.append(
+                    f"evals/evals.json cases[{index}] project-research behaviors "
+                    "must cover the visible research decision brief"
+                )
 
 
 def _validate_trigger_cases(payload: Any, errors: list[str]) -> None:
@@ -267,6 +300,7 @@ def validate_repository(root: Path) -> list[str]:
     skill_path = root / "skills/old-hand/SKILL.md"
     if skill_path.is_file():
         skill_text = skill_path.read_text(encoding="utf-8")
+        normalized_skill_text = " ".join(skill_text.split())
         metadata = _frontmatter(skill_text)
         if metadata is None:
             errors.append("SKILL.md must contain closed YAML frontmatter")
@@ -321,6 +355,11 @@ def validate_repository(root: Path) -> list[str]:
                 errors.append(f"SKILL.md does not route to {reference}")
             if not (skill_path.parent / reference).is_file():
                 errors.append(f"routed reference is missing: {reference}")
+        if SKILL_VISIBLE_RESEARCH_GATE not in normalized_skill_text:
+            errors.append(
+                "SKILL.md must require a visible research decision brief before "
+                "implementation"
+            )
 
     plugin_path = root / ".codex-plugin/plugin.json"
     if plugin_path.is_file():
@@ -445,6 +484,20 @@ def validate_repository(root: Path) -> list[str]:
             errors.append(
                 "research protocol must check configured search capabilities "
                 "before declaring search unavailable"
+            )
+        if (
+            RESEARCH_VISIBLE_DECISION_GATE not in normalized_research_text
+            or not all(term in research_text for term in RESEARCH_VISIBLE_SECTIONS)
+        ):
+            errors.append(
+                "research protocol must require a user-visible decision brief "
+                "with common patterns, borrow and avoid reasons, a minimal "
+                "direction, and decision-critical questions"
+            )
+        if RESEARCH_VISIBLE_SEPARATION_GATE not in normalized_research_text:
+            errors.append(
+                "research protocol must keep the four visible synthesis sections "
+                "separate from the candidate table"
             )
 
     forbidden = ("TODO", "TBD", "[PLACEHOLDER")

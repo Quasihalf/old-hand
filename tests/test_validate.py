@@ -318,6 +318,77 @@ class ValidateRepositoryTests(unittest.TestCase):
             "before declaring search unavailable"
         )
 
+    def test_rejects_research_without_visible_decision_brief(self):
+        protocol_path = (
+            self.repo / "skills/old-hand/references/research-protocol.md"
+        )
+        protocol_text = protocol_path.read_text(encoding="utf-8")
+        output_start = protocol_text.index("## Output Format")
+        protocol_path.write_text(
+            protocol_text[:output_start]
+            + "## Output Format\n\nReturn a list of candidate links.\n",
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "research protocol must require a user-visible decision brief "
+            "with common patterns, borrow and avoid reasons, a minimal "
+            "direction, and decision-critical questions"
+        )
+
+    def test_rejects_research_that_merges_synthesis_into_candidate_table(self):
+        protocol_path = (
+            self.repo / "skills/old-hand/references/research-protocol.md"
+        )
+        protocol_path.write_text(
+            protocol_path.read_text(encoding="utf-8").replace(
+                "Keep these four synthesis sections separate\n"
+                "from the candidate table and from each other.",
+                "The candidate table may carry the complete synthesis.",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "research protocol must keep the four visible synthesis sections "
+            "separate from the candidate table"
+        )
+
+    def test_rejects_skill_without_visible_research_output(self):
+        skill_path = self.repo / "skills/old-hand/SKILL.md"
+        skill_path.write_text(
+            skill_path.read_text(encoding="utf-8").replace(
+                "Project-start research: after searching and before design, "
+                "scaffolding, or\n  implementation, show the user a compact "
+                "decision brief.",
+                "Project-start research: summarize useful links.",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "SKILL.md must require a visible research decision brief before "
+            "implementation"
+        )
+
+    def test_rejects_project_research_eval_without_visible_output_contract(self):
+        eval_path = self.repo / "evals/evals.json"
+        payload = json.loads(eval_path.read_text(encoding="utf-8"))
+        research_case = next(
+            case for case in payload["cases"] if case["route"] == "project-research"
+        )
+        research_case["expect"]["behaviors"] = [
+            "searches several maintained projects and cites them"
+        ]
+        eval_path.write_text(json.dumps(payload), encoding="utf-8")
+
+        self.assert_has_error(
+            "project-research behaviors must cover the visible research "
+            "decision brief"
+        )
+
     def test_rejects_absolute_plugin_skills_path(self):
         manifest_path = self.repo / ".codex-plugin/plugin.json"
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -359,7 +430,7 @@ class ValidateRepositoryTests(unittest.TestCase):
 
         errors = validate_repository(self.repo)
         for fragment in (
-            "evals/evals.json must set version to '0.2.3'",
+            "evals/evals.json must set version to '0.2.4'",
             "evals/evals.json cases[0].route must be non-empty",
             "evals/evals.json cases[0].expect.behaviors must be a non-empty array",
             "evals/evals.json cases[0].expect.avoid must be a non-empty array",
@@ -376,7 +447,7 @@ class ValidateRepositoryTests(unittest.TestCase):
 
         errors = validate_repository(self.repo)
         for fragment in (
-            "evals/trigger-cases.json must set version to '0.2.3'",
+            "evals/trigger-cases.json must set version to '0.2.4'",
             "evals/trigger-cases.json cases[1].id must be unique and non-empty",
             "evals/trigger-cases.json cases[0].reason must be non-empty",
         ):
@@ -427,10 +498,15 @@ class ValidateRepositoryTests(unittest.TestCase):
     def test_rejects_agent_default_prompt_over_runtime_limit(self):
         metadata_path = self.repo / "skills/old-hand/agents/openai.yaml"
         metadata = metadata_path.read_text(encoding="utf-8")
+        current_line = next(
+            line
+            for line in metadata.splitlines()
+            if line.strip().startswith("default_prompt:")
+        )
         metadata = metadata.replace(
-            "Use $old-hand for every substantive coding task; research comparable "
-            "projects before designing a new direction.",
-            "$old-hand " + "x" * 119,
+            current_line,
+            '  default_prompt: "$old-hand ' + "x" * 119 + '"',
+            1,
         )
         metadata_path.write_text(metadata, encoding="utf-8")
 
@@ -441,10 +517,15 @@ class ValidateRepositoryTests(unittest.TestCase):
     def test_rejects_agent_default_prompt_without_substantive_coding(self):
         metadata_path = self.repo / "skills/old-hand/agents/openai.yaml"
         metadata = metadata_path.read_text(encoding="utf-8")
+        current_line = next(
+            line
+            for line in metadata.splitlines()
+            if line.strip().startswith("default_prompt:")
+        )
         metadata = metadata.replace(
-            "Use $old-hand for every substantive coding task; research comparable "
-            "projects before designing a new direction.",
-            "Use $old-hand only when creating a new engineering artifact.",
+            current_line,
+            '  default_prompt: "Use $old-hand only when creating a new '
+            'engineering artifact."',
             1,
         )
         metadata_path.write_text(metadata, encoding="utf-8")

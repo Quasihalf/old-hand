@@ -108,8 +108,13 @@ skill lead artifact-specific mechanics.
 - Small fixes: put code or result first, then state what broke, the root cause,
   the fix, and the check run in one short line each. Do not collapse a
   non-trivial fix into a completion notice.
-- Project-start research: include research summary, borrowed patterns, selected
-  benchmark, minimal implementation direction, and next steps.
+- Project-start research: after searching and before design, scaffolding, or
+  implementation, show the user a compact decision brief. Make 3-5 common
+  mature patterns, the selected benchmark, borrow and avoid decisions with
+  reasons, the minimal build direction, and decision-critical questions
+  explicit in clearly labeled, separate sections. Do not fold these decisions
+  into the candidate table. A link list or tool trace is not the synthesis. If
+  no question blocks the work, say so briefly and continue the requested work.
 - Reviews: findings first, with concrete evidence.
 - Keep receipts compact: include the dependency receipt only for a new
   dependency, and the root-cause receipt only for a non-trivial bug fix.

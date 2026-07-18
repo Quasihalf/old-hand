@@ -218,6 +218,25 @@ class ValidateRepositoryTests(unittest.TestCase):
             "as blockers to the initial search"
         )
 
+    def test_rejects_unverified_search_unavailability(self):
+        protocol_path = (
+            self.repo / "skills/old-hand/references/research-protocol.md"
+        )
+        protocol_path.write_text(
+            protocol_path.read_text(encoding="utf-8").replace(
+                "Before declaring search unavailable, inspect the callable "
+                "tools and available\n   Skill names for web search.",
+                "Assume external search is unavailable when no native tool is visible.",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "research protocol must check configured search capabilities "
+            "before declaring search unavailable"
+        )
+
     def test_rejects_absolute_plugin_skills_path(self):
         manifest_path = self.repo / ".codex-plugin/plugin.json"
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))

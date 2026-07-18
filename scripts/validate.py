@@ -38,6 +38,10 @@ CREATION_NONBLOCKING_DIMENSIONS = (
     "Tool or backend choice, target app, installation location, and exact "
     "feature scope are not blocking questions"
 )
+CREATION_SEARCH_DISCOVERY_GATE = (
+    "Before declaring search unavailable, inspect the callable tools and "
+    "available Skill names for web search."
+)
 
 REQUIRED_FILES = (
     ".agents/plugins/marketplace.json",
@@ -386,6 +390,11 @@ def validate_repository(root: Path) -> list[str]:
             errors.append(
                 "research protocol must not treat creator implementation choices "
                 "as blockers to the initial search"
+            )
+        if CREATION_SEARCH_DISCOVERY_GATE not in normalized_research_text:
+            errors.append(
+                "research protocol must check configured search capabilities "
+                "before declaring search unavailable"
             )
 
     forbidden = ("TODO", "TBD", "[PLACEHOLDER")

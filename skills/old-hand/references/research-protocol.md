@@ -47,9 +47,6 @@ the initial evidence.
 Also use it when the user asks for similar open-source projects, references,
 benchmarks, prior art, mature patterns, or says "找类似开源项目" or "借鉴开源项目".
 
-If the target is too vague to search well, ask one or two clarifying questions
-before searching.
-
 Do not run the full candidate search for a routine dependency choice inside an
 existing implementation. Check local code, standard library, platform features,
 installed dependencies, and official docs first.
@@ -75,11 +72,14 @@ Default to a medium-deep pass:
 5. Use general web search when GitHub-specific search is unavailable or weak.
 6. Use whatever web/search tools exist in the environment; do not depend on a
    specific provider.
-7. Before declaring search unavailable, check once for an already-configured
-   search tool or CLI. Do not install or authenticate a new provider just to
-   satisfy the gate.
-8. If search is unavailable, state that limitation and continue from local
-   knowledge without pretending the research happened.
+7. Before declaring search unavailable, inspect the callable tools and available
+   Skill names for web search. If shell access exists, also check for an
+   already-installed search CLI. For example, run `command -v firecrawl` and
+   `command -v gh`; use `firecrawl search` or `gh search repos` when configured.
+   These are fallback examples, not provider requirements.
+8. Do not install or authenticate a new provider just to satisfy the gate. If
+   the capability check finds no usable option, state that limitation and
+   continue from local knowledge without pretending the research happened.
 9. Cite the sources used in the final research summary.
 
 ## Research Safety

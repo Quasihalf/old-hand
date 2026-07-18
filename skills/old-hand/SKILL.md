@@ -79,6 +79,10 @@ skill lead artifact-specific mechanics.
 - When a web/search tool is available, only an external search completes the
   creation gate. Local skills, repositories, and model memory are supporting
   evidence, not a substitute.
+- If no native search tool is visible but shell access exists, do not assume
+  search is unavailable. Check for an installed search skill or CLI; examples
+  include `firecrawl` and `gh search repos`. Use whichever configured option is
+  available without installing or authenticating a new provider.
 - Before that initial search, do not commit to a stack, architecture, feature
   scope, benchmark, or scaffold location.
 - A small correction, metadata edit, rename, or formatting change to an
@@ -88,7 +92,8 @@ skill lead artifact-specific mechanics.
 - Do not search for ordinary small debug tasks.
 - Search official docs only when current external API, library, security, legal,
   or platform behavior materially affects the fix.
-- If no web/search tool exists, say so and continue with local reasoning.
+- Only after that capability check finds no usable option may you say search is
+  unavailable and continue with local reasoning.
 
 ## Output style
 

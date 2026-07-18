@@ -10,6 +10,7 @@
         "behaviors": [
           "implicitly co-loads old-hand with skill-creator without requiring explicit search wording",
           "runs an external web or GitHub search for comparable skills and open-source video-editing projects before design or scaffolding",
+          "checks configured search skills or CLIs before declaring external search unavailable",
           "treats backend, target app, installation location, and exact feature scope as shortlist dimensions rather than blockers to the initial search",
           "runs the initial search before finalizing a stack, architecture, feature scope, benchmark, or scaffold location",
           "cites inspected sources and separates patterns to borrow from code not to copy",
@@ -18,6 +19,7 @@
         "avoid": [
           "letting a specialized creator skill bypass prior-art research",
           "counting local skill or repository inspection as completion of the creation research gate",
+          "declaring search unavailable without checking configured search skills or CLIs",
           "starting design or scaffolding before the research gate",
           "treating FFmpeg or another provisional search hypothesis as settled, or scaffolding before the initial search"
         ]

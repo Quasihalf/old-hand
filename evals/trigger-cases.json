@@ -1,6 +1,6 @@
 {
   "skill_name": "old-hand",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "cases": [
     {
       "id": "trigger-new-product",
@@ -31,6 +31,24 @@
       "query": "Add this endpoint using the repository's existing authorization and validation patterns.",
       "should_trigger": true,
       "reason": "Normal implementation requires reuse and scope judgment."
+    },
+    {
+      "id": "trigger-existing-cli-json-output",
+      "query": "在这个现有 Python CLI 中实现 --format json 输出，默认文本输出保持不变，并补充测试。",
+      "should_trigger": true,
+      "reason": "A substantive feature extension in existing code needs local reuse and compatibility judgment."
+    },
+    {
+      "id": "trigger-existing-priority-queue",
+      "query": "给现有 TaskQueue 增加优先级支持，同优先级保持 FIFO，并保留原有调用兼容性。",
+      "should_trigger": true,
+      "reason": "A data-structure behavior change is substantive implementation, not a mechanical edit."
+    },
+    {
+      "id": "trigger-existing-environment-config",
+      "query": "为现有配置加载器增加 APP_ 环境变量覆盖，转换类型、处理非法值并补充测试。",
+      "should_trigger": true,
+      "reason": "Configuration behavior and validation changes require engineering judgment and targeted checks."
     },
     {
       "id": "trigger-refactor",

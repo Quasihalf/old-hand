@@ -1,6 +1,6 @@
 {
   "skill_name": "old-hand",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "cases": [
     {
       "id": "implicit-skill-creation-research",
@@ -114,6 +114,48 @@
           "adds the smallest relevant runnable check"
         ],
         "avoid": ["introducing a new architecture"]
+      }
+    },
+    {
+      "id": "existing-cli-json-output",
+      "prompt": "在这个现有 Python CLI 中实现 --format json 输出。JSON 必须是字符串数组，默认文本输出保持不变，并补充测试。直接完成实现和验证。",
+      "route": "implementation",
+      "expect": {
+        "behaviors": [
+          "implicitly loads old-hand for substantive feature work",
+          "reads the current CLI and tests before editing",
+          "uses the standard library and preserves default output",
+          "adds and runs focused compatibility checks"
+        ],
+        "avoid": ["external project research", "a new serialization dependency", "unrelated CLI redesign"]
+      }
+    },
+    {
+      "id": "existing-priority-queue",
+      "prompt": "给现有 TaskQueue 增加优先级支持：enqueue 的 priority 默认为 0，数值越大越先出队，同优先级保持 FIFO；保留原有调用兼容性并补充测试。直接完成实现和验证。",
+      "route": "implementation",
+      "expect": {
+        "behaviors": [
+          "implicitly loads old-hand for a substantive behavior change",
+          "preserves the existing enqueue call contract",
+          "uses the smallest standard-library implementation that provides stable ordering",
+          "tests priority order, FIFO stability, and compatibility"
+        ],
+        "avoid": ["external project research", "a third-party queue dependency", "speculative queue abstractions"]
+      }
+    },
+    {
+      "id": "existing-environment-config",
+      "prompt": "为现有配置加载器增加 APP_ 环境变量覆盖，只支持 HOST、PORT、DEBUG。PORT 转整数，DEBUG 接受 true/false/1/0，非法值抛 ValueError，并补充测试。直接完成实现和验证。",
+      "route": "implementation",
+      "expect": {
+        "behaviors": [
+          "implicitly loads old-hand for substantive configuration behavior",
+          "reads and preserves the existing configuration contract",
+          "handles conversion and invalid input at the shared loader",
+          "adds focused tests without broadening the feature"
+        ],
+        "avoid": ["external project research", "a configuration framework dependency", "support for unspecified environment variables"]
       }
     },
     {

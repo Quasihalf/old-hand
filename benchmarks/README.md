@@ -5,12 +5,13 @@ whether an answer merely sounds experienced.
 
 ## Current Status
 
-Version `0.2.2` includes a qualitative behavior baseline, the v0.2.1
-implicit-trigger run, and five repeated network-enabled creator-research
-regression runs. This is stronger ordering evidence, not a statistical A/B
-benchmark or an invocation-rate claim. See [baseline.md](baseline.md),
-[the v0.2.1 review](../evals/reports/v0.2.1-review.md), and
-[the v0.2.2 review](../evals/reports/v0.2.2-review.md) for the evidence and its
+Version `0.2.3` adds repeated trace-based routing checks for substantive coding,
+mechanical boundaries, local debugging, and six creator categories to the
+earlier qualitative baseline and creator-research regressions. This is stronger
+regression evidence, not a randomized A/B benchmark or a universal invocation
+rate. See [baseline.md](baseline.md),
+[the v0.2.2 review](../evals/reports/v0.2.2-review.md), and
+[the v0.2.3 review](../evals/reports/v0.2.3-review.md) for the evidence and its
 limits.
 
 ## Planned Comparison

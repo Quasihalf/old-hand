@@ -19,11 +19,15 @@ codex plugin marketplace add Quasihalf/old-hand --ref main
 codex plugin add old-hand@old-hand
 ```
 
-Start a new Codex task after installation so the new skill is available. Use
-`$old-hand` explicitly when you want to force it for a coding task. For new or
-substantially redesigned skills, plugins, agents, MCP servers, automations,
-workflows, developer tools, apps, and products, it is designed to co-load
-automatically with the specialized creator skill before design or scaffolding.
+Start a new Codex task after installation so the new skill is available. It is
+designed to load automatically for substantive implementation, debugging,
+refactoring, review, architecture, and dependency work even when the user does
+not name it. Constrained renames, formatting-only changes, exact metadata fixes,
+and one-step factual reads stay outside the route. Use `$old-hand` when you want
+to force it explicitly. For new or substantially redesigned skills, plugins,
+agents, MCP servers, automations, workflows, developer tools, apps, and
+products, it co-loads with the specialized creator skill before design or
+scaffolding.
 
 ## Routes
 
@@ -37,6 +41,9 @@ process everywhere:
 - **New project, product direction, architecture, or foundational dependency:**
   research comparable open-source projects before designing; record sources,
   selection rationale, and a minimal build direction.
+- **Existing-project implementation or feature extension:** read the real path
+  and sibling implementations, reuse local contracts, and run the smallest
+  relevant check. Do not browse unless the work establishes a new direction.
 - **Routine dependency choice:** inspect local code, platform features, the
   standard library, installed dependencies, and then official documentation as
   needed before adding anything new.
@@ -46,9 +53,9 @@ process everywhere:
 - **Code or plan review:** lead with evidence-based findings, remove needless
   complexity, and preserve the actual requirement.
 
-For ordinary implementation, the core habits still apply: understand the real
-path, reuse what already exists, and avoid abstractions or configuration that
-have not earned their cost.
+For ordinary implementation, these habits are the active route rather than
+optional background advice: understand the real path, reuse what already
+exists, and avoid abstractions or configuration that have not earned their cost.
 
 ## Boundaries
 
@@ -68,11 +75,14 @@ have not earned their cost.
 
 ## Evidence
 
-Development evidence includes nine qualitative baseline scenarios, one v0.2.1
-implicit-trigger run, and five repeated v0.2.2 creator-research runs. They are
-useful behavioral and ordering evidence, not a statistical benchmark, an
-invocation-rate claim, or measured cross-platform support. See the
-[benchmark plan](benchmarks/README.md) for details and limits.
+Version `0.2.3` was forward-tested in isolated Codex homes: substantive
+existing-project implementation loaded Old Hand in 9/9 runs, mechanical
+controls skipped it in 6/6 runs, local debugging used its debug path in 3/3
+runs, and six creation categories retained research-before-design behavior.
+These are repeated regression results from one configured environment, not a
+universal invocation-rate or cross-platform claim. See the
+[v0.2.3 review](evals/reports/v0.2.3-review.md) and
+[benchmark plan](benchmarks/README.md) for evidence and limits.
 
 ## Contents
 

@@ -62,6 +62,19 @@ class ValidateRepositoryTests(unittest.TestCase):
             "plugin manifest interface.defaultPrompt must be at most 128 characters"
         )
 
+    def test_rejects_plugin_default_prompt_without_substantive_coding(self):
+        manifest_path = self.repo / ".codex-plugin/plugin.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["interface"]["defaultPrompt"] = (
+            "Use $old-hand only when creating a new engineering artifact."
+        )
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+        self.assert_has_error(
+            "plugin manifest interface.defaultPrompt must cover every "
+            "substantive coding task"
+        )
+
     def test_rejects_invalid_eval_schema(self):
         eval_path = self.repo / "evals/evals.json"
         payload = json.loads(eval_path.read_text(encoding="utf-8"))
@@ -93,11 +106,28 @@ class ValidateRepositoryTests(unittest.TestCase):
 
         self.assert_has_error("SKILL.md frontmatter must set name to 'old-hand'")
 
+    def test_rejects_skill_description_over_runtime_limit(self):
+        skill_path = self.repo / "skills/old-hand/SKILL.md"
+        skill_path.write_text(
+            skill_path.read_text(encoding="utf-8").replace(
+                "  requests. Skip unrelated prose and general knowledge.\n---",
+                "  requests. Skip unrelated prose and general knowledge. "
+                + "x" * 1025
+                + "\n---",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "SKILL.md description must be at most 1024 characters"
+        )
+
     def test_rejects_missing_creation_trigger(self):
         skill_path = self.repo / "skills/old-hand/SKILL.md"
         skill_path.write_text(
             skill_path.read_text(encoding="utf-8").replace(
-                "a skill, plugin, agent, MCP server,\n  automation, reusable workflow",
+                "a skill, plugin, agent, MCP server,\n  automation, workflow",
                 "a reusable artifact",
                 1,
             ),
@@ -107,6 +137,57 @@ class ValidateRepositoryTests(unittest.TestCase):
         self.assert_has_error(
             "SKILL.md description must explicitly trigger for skill, plugin, "
             "agent, MCP, and workflow creation"
+        )
+
+    def test_rejects_substantive_coding_route_that_is_not_front_loaded(self):
+        skill_path = self.repo / "skills/old-hand/SKILL.md"
+        skill_path.write_text(
+            skill_path.read_text(encoding="utf-8").replace(
+                "Always use Old Hand as a cross-cutting judgment layer for "
+                "every\n  substantive coding task",
+                "Use Old Hand for coding when helpful",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "SKILL.md description must front-load every substantive coding task"
+        )
+
+    def test_rejects_missing_substantive_coding_routes(self):
+        skill_path = self.repo / "skills/old-hand/SKILL.md"
+        skill_path.write_text(
+            skill_path.read_text(encoding="utf-8").replace(
+                "feature implementation in existing code, debugging,\n"
+                "  refactoring, code or plan review, dependency choices, and "
+                "architecture\n  decisions",
+                "writing code",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "SKILL.md description must cover implementation, debugging, "
+            "refactoring, review, dependencies, and architecture"
+        )
+
+    def test_rejects_mechanical_skip_rule_that_is_not_front_loaded(self):
+        skill_path = self.repo / "skills/old-hand/SKILL.md"
+        skill_path.write_text(
+            skill_path.read_text(encoding="utf-8").replace(
+                "skip purely mechanical edits: a constrained rename,\n"
+                "  formatting-only change, exact metadata correction, or one-step "
+                "factual read",
+                "including mechanical edits",
+                1,
+            ),
+            encoding="utf-8",
+        )
+
+        self.assert_has_error(
+            "SKILL.md description must front-load the mechanical-edit boundary"
         )
 
     def test_rejects_creation_coload_rule_that_is_not_front_loaded(self):
@@ -130,8 +211,8 @@ class ValidateRepositoryTests(unittest.TestCase):
         skill_path = self.repo / "skills/old-hand/SKILL.md"
         skill_path.write_text(
             skill_path.read_text(encoding="utf-8").replace(
-                "before finalizing the initial stack,",
-                "after finalizing the initial stack,",
+                "before\n  finalizing the initial stack,",
+                "after\n  finalizing the initial stack,",
                 1,
             ),
             encoding="utf-8",
@@ -278,7 +359,7 @@ class ValidateRepositoryTests(unittest.TestCase):
 
         errors = validate_repository(self.repo)
         for fragment in (
-            "evals/evals.json must set version to '0.2.2'",
+            "evals/evals.json must set version to '0.2.3'",
             "evals/evals.json cases[0].route must be non-empty",
             "evals/evals.json cases[0].expect.behaviors must be a non-empty array",
             "evals/evals.json cases[0].expect.avoid must be a non-empty array",
@@ -295,7 +376,7 @@ class ValidateRepositoryTests(unittest.TestCase):
 
         errors = validate_repository(self.repo)
         for fragment in (
-            "evals/trigger-cases.json must set version to '0.2.2'",
+            "evals/trigger-cases.json must set version to '0.2.3'",
             "evals/trigger-cases.json cases[1].id must be unique and non-empty",
             "evals/trigger-cases.json cases[0].reason must be non-empty",
         ):
@@ -347,14 +428,30 @@ class ValidateRepositoryTests(unittest.TestCase):
         metadata_path = self.repo / "skills/old-hand/agents/openai.yaml"
         metadata = metadata_path.read_text(encoding="utf-8")
         metadata = metadata.replace(
-            "Use $old-hand with creator skills; research comparable projects "
-            "before designing or scaffolding a new engineering artifact.",
+            "Use $old-hand for every substantive coding task; research comparable "
+            "projects before designing a new direction.",
             "$old-hand " + "x" * 119,
         )
         metadata_path.write_text(metadata, encoding="utf-8")
 
         self.assert_has_error(
             "openai.yaml interface.default_prompt must be at most 128 characters"
+        )
+
+    def test_rejects_agent_default_prompt_without_substantive_coding(self):
+        metadata_path = self.repo / "skills/old-hand/agents/openai.yaml"
+        metadata = metadata_path.read_text(encoding="utf-8")
+        metadata = metadata.replace(
+            "Use $old-hand for every substantive coding task; research comparable "
+            "projects before designing a new direction.",
+            "Use $old-hand only when creating a new engineering artifact.",
+            1,
+        )
+        metadata_path.write_text(metadata, encoding="utf-8")
+
+        self.assert_has_error(
+            "openai.yaml interface.default_prompt must cover every substantive "
+            "coding task"
         )
 
 

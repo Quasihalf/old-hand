@@ -1,18 +1,20 @@
 ---
 name: old-hand
 description: >-
+  Always use Old Hand as a cross-cutting judgment layer for every
+  substantive coding task; skip purely mechanical edits: a constrained rename,
+  formatting-only change, exact metadata correction, or one-step factual read.
+  Substantive work includes feature implementation in existing code, debugging,
+  refactoring, code or plan review, dependency choices, and architecture
+  decisions. Keep it active beside specialized coding skills even when unnamed.
   Always use Old Hand together with skill-creator or plugin-creator before
   creating or substantially redesigning a skill, plugin, agent, MCP server,
-  automation, reusable workflow, developer tool, app, or product, even when the
-  user did not ask for research. Run an external comparable-project search
-  before asking non-blocking creator questions and before finalizing the initial stack,
-  architecture, scope, benchmark, or scaffold. Also use it as a cross-cutting judgment
-  layer when implementing, debugging, refactoring, reviewing, choosing
-  dependencies, or starting an architecture or foundational dependency direction.
-  Also use for "old-hand", "老程序员", "像老手一样写", "创建 skill", "做一个 skill",
-  "create a skill", "build a plugin", "找类似开源项目", "借鉴开源项目", "不要过度设计",
-  "YAGNI", prior-art, root-cause, or smaller-solution requests. Skip only purely
-  mechanical edits and unrelated non-coding prose or general knowledge.
+  automation, workflow, developer tool, app, or product. For creation, search
+  comparable open-source projects before questions and before
+  finalizing the initial stack, architecture, scope, benchmark, or scaffold,
+  even without a research request. Also use for "old-hand", "老程序员",
+  "像老手一样写", "找类似开源项目", "不要过度设计", YAGNI, or root-cause
+  requests. Skip unrelated prose and general knowledge.
 ---
 
 # Old Hand
@@ -49,7 +51,10 @@ skill lead artifact-specific mechanics.
   specialized debugging skill lead its procedure, and do not browse by default.
 - **Code review, plan review, or over-engineering check**: read
   `references/review-protocol.md`.
-- **Normal implementation**: apply the core habits below directly.
+- **Normal implementation or feature extension**: apply the core habits below
+  directly. Read the existing path and sibling implementations before editing;
+  reuse their contracts and add the smallest relevant runnable check. Do not
+  browse merely because Old Hand is active.
 
 ## Core habits
 
@@ -90,6 +95,9 @@ skill lead artifact-specific mechanics.
 - For routine dependency choices, inspect local code, standard library,
   platform features, and installed dependencies before searching broadly.
 - Do not search for ordinary small debug tasks.
+- Do not search for ordinary implementation in an existing project unless it
+  introduces a new product, architecture, foundational dependency, or other
+  direction that meets the research rules above.
 - Search official docs only when current external API, library, security, legal,
   or platform behavior materially affects the fix.
 - Only after that capability check finds no usable option may you say search is

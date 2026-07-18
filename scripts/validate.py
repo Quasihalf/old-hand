@@ -10,9 +10,27 @@ from pathlib import Path
 from typing import Any
 
 
-RELEASE_VERSION = "0.2.2"
+RELEASE_VERSION = "0.2.3"
+MAX_SKILL_DESCRIPTION_LENGTH = 1024
 MAX_DEFAULT_PROMPT_LENGTH = 128
-CREATION_COLOAD_PREFIX = (
+SUBSTANTIVE_DEFAULT_PROMPT = "every substantive coding task"
+SUBSTANTIVE_CODING_PREFIX = (
+    "always use old hand as a cross-cutting judgment layer for every "
+    "substantive coding task"
+)
+SUBSTANTIVE_CODING_TERMS = (
+    "feature implementation in existing code",
+    "debugging",
+    "refactoring",
+    "code or plan review",
+    "dependency choices",
+    "architecture decisions",
+)
+MECHANICAL_SKIP_RULE = (
+    "skip purely mechanical edits: a constrained rename, formatting-only "
+    "change, exact metadata correction, or one-step factual read"
+)
+CREATION_COLOAD_RULE = (
     "always use old hand together with skill-creator or plugin-creator before "
     "creating or substantially redesigning"
 )
@@ -260,7 +278,29 @@ def validate_repository(root: Path) -> list[str]:
                 errors.append("SKILL.md frontmatter description must be non-empty")
             else:
                 lowered_description = description.lower()
-                if not lowered_description.startswith(CREATION_COLOAD_PREFIX):
+                if len(description) > MAX_SKILL_DESCRIPTION_LENGTH:
+                    errors.append(
+                        "SKILL.md description must be at most "
+                        f"{MAX_SKILL_DESCRIPTION_LENGTH} characters"
+                    )
+                if not lowered_description.startswith(SUBSTANTIVE_CODING_PREFIX):
+                    errors.append(
+                        "SKILL.md description must front-load every substantive "
+                        "coding task"
+                    )
+                if not all(
+                    term in lowered_description for term in SUBSTANTIVE_CODING_TERMS
+                ):
+                    errors.append(
+                        "SKILL.md description must cover implementation, debugging, "
+                        "refactoring, review, dependencies, and architecture"
+                    )
+                if MECHANICAL_SKIP_RULE not in lowered_description[:500]:
+                    errors.append(
+                        "SKILL.md description must front-load the mechanical-edit "
+                        "boundary"
+                    )
+                if CREATION_COLOAD_RULE not in lowered_description:
                     errors.append(
                         "SKILL.md description must front-load creator-skill co-loading"
                     )
@@ -311,6 +351,11 @@ def validate_repository(root: Path) -> list[str]:
                     "plugin manifest interface.defaultPrompt must be at most "
                     f"{MAX_DEFAULT_PROMPT_LENGTH} characters"
                 )
+            elif SUBSTANTIVE_DEFAULT_PROMPT not in default_prompt.lower():
+                errors.append(
+                    "plugin manifest interface.defaultPrompt must cover every "
+                    "substantive coding task"
+                )
             skills = plugin.get("skills")
             if not isinstance(skills, str) or Path(skills).is_absolute():
                 errors.append("plugin manifest skills must be a relative path")
@@ -357,6 +402,11 @@ def validate_repository(root: Path) -> list[str]:
             errors.append(
                 "openai.yaml interface.default_prompt must be at most "
                 f"{MAX_DEFAULT_PROMPT_LENGTH} characters"
+            )
+        elif SUBSTANTIVE_DEFAULT_PROMPT not in default_prompt.lower():
+            errors.append(
+                "openai.yaml interface.default_prompt must cover every substantive "
+                "coding task"
             )
         if policy.get("allow_implicit_invocation") is not True:
             errors.append("openai.yaml policy.allow_implicit_invocation must be true")

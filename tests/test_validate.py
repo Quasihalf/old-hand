@@ -52,6 +52,16 @@ class ValidateRepositoryTests(unittest.TestCase):
 
         self.assert_has_error("plugin manifest must set name to 'old-hand'")
 
+    def test_rejects_plugin_default_prompt_over_runtime_limit(self):
+        manifest_path = self.repo / ".codex-plugin/plugin.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["interface"]["defaultPrompt"] = "$old-hand " + "x" * 119
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+        self.assert_has_error(
+            "plugin manifest interface.defaultPrompt must be at most 128 characters"
+        )
+
     def test_rejects_invalid_eval_schema(self):
         eval_path = self.repo / "evals/evals.json"
         payload = json.loads(eval_path.read_text(encoding="utf-8"))
@@ -276,6 +286,20 @@ class ValidateRepositoryTests(unittest.TestCase):
             "openai.yaml interface.default_prompt must mention '$old-hand'",
         ):
             self.assertTrue(any(fragment in error for error in errors), fragment)
+
+    def test_rejects_agent_default_prompt_over_runtime_limit(self):
+        metadata_path = self.repo / "skills/old-hand/agents/openai.yaml"
+        metadata = metadata_path.read_text(encoding="utf-8")
+        metadata = metadata.replace(
+            "Use $old-hand with creator skills; research comparable projects "
+            "before designing or scaffolding a new engineering artifact.",
+            "$old-hand " + "x" * 119,
+        )
+        metadata_path.write_text(metadata, encoding="utf-8")
+
+        self.assert_has_error(
+            "openai.yaml interface.default_prompt must be at most 128 characters"
+        )
 
 
 if __name__ == "__main__":

@@ -24,6 +24,6 @@
     "developerName": "Quasihalf",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "Use $old-hand alongside specialized coding skills, researching comparable projects before creating or substantially redesigning an engineering artifact."
+    "defaultPrompt": "Use $old-hand with creator skills; research comparable projects before designing or scaffolding a new engineering artifact."
   }
 }

@@ -11,6 +11,7 @@ from typing import Any
 
 
 RELEASE_VERSION = "0.2.2"
+MAX_DEFAULT_PROMPT_LENGTH = 128
 CREATION_COLOAD_PREFIX = (
     "always use old hand together with skill-creator or plugin-creator before "
     "creating or substantially redesigning"
@@ -283,6 +284,21 @@ def validate_repository(root: Path) -> list[str]:
                 )
             if plugin.get("license") != "MIT":
                 errors.append("plugin manifest must set license to 'MIT'")
+            interface = plugin.get("interface")
+            default_prompt = (
+                interface.get("defaultPrompt")
+                if isinstance(interface, dict)
+                else None
+            )
+            if not isinstance(default_prompt, str) or not default_prompt.strip():
+                errors.append(
+                    "plugin manifest interface.defaultPrompt must be non-empty"
+                )
+            elif len(default_prompt) > MAX_DEFAULT_PROMPT_LENGTH:
+                errors.append(
+                    "plugin manifest interface.defaultPrompt must be at most "
+                    f"{MAX_DEFAULT_PROMPT_LENGTH} characters"
+                )
             skills = plugin.get("skills")
             if not isinstance(skills, str) or Path(skills).is_absolute():
                 errors.append("plugin manifest skills must be a relative path")
@@ -325,6 +341,11 @@ def validate_repository(root: Path) -> list[str]:
         default_prompt = interface.get("default_prompt")
         if not isinstance(default_prompt, str) or "$old-hand" not in default_prompt:
             errors.append("openai.yaml interface.default_prompt must mention '$old-hand'")
+        elif len(default_prompt) > MAX_DEFAULT_PROMPT_LENGTH:
+            errors.append(
+                "openai.yaml interface.default_prompt must be at most "
+                f"{MAX_DEFAULT_PROMPT_LENGTH} characters"
+            )
         if policy.get("allow_implicit_invocation") is not True:
             errors.append("openai.yaml policy.allow_implicit_invocation must be true")
 
